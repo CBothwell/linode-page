@@ -1,0 +1,1167 @@
+"dispatch.ml" 7 101 107 "dispatch.ml" 7 101 112
+type(
+  C.t -> FS.t -> (S.t -> 'a) -> 'a
+)
+ident(
+  def start "dispatch.ml" 61 1834 1870 "dispatch.ml" 63 1872 1875
+)
+"dispatch.ml" 7 101 113 "dispatch.ml" 7 101 114
+type(
+  C.t
+)
+ident(
+  def c "dispatch.ml" 7 101 115 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 7 101 115 "dispatch.ml" 7 101 117
+type(
+  FS.t
+)
+ident(
+  def fs "dispatch.ml" 7 101 118 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 7 101 118 "dispatch.ml" 7 101 122
+type(
+  S.t -> 'a
+)
+ident(
+  def http "dispatch.ml" 9 126 130 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 9 126 134 "dispatch.ml" 9 126 141
+type(
+  string -> string Lwt.t
+)
+ident(
+  def read_fs "dispatch.ml" 21 526 530 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 9 126 142 "dispatch.ml" 9 126 146
+type(
+  string
+)
+ident(
+  def name "dispatch.ml" 10 149 155 "dispatch.ml" 17 417 466
+)
+"dispatch.ml" 10 149 155 "dispatch.ml" 10 149 162
+type(
+  FS.t -> string -> [ `Error of FS.error | `Ok of int64 ] FS.io
+)
+ident(
+  ext_ref FS.size
+)
+"dispatch.ml" 10 149 163 "dispatch.ml" 10 149 165
+type(
+  FS.t
+)
+ident(
+  int_ref fs "dispatch.ml" 7 101 115 "dispatch.ml" 7 101 117
+)
+"dispatch.ml" 10 149 166 "dispatch.ml" 10 149 170
+type(
+  string
+)
+ident(
+  int_ref name "dispatch.ml" 9 126 142 "dispatch.ml" 9 126 146
+)
+"dispatch.ml" 10 149 155 "dispatch.ml" 10 149 170
+call(
+  stack
+)
+type(
+  [ `Error of FS.error | `Ok of int64 ] FS.io
+)
+"dispatch.ml" 11 171 177 "dispatch.ml" 11 171 180
+type(
+  [ `Error of FS.error | `Ok of int64 ] Lwt.t ->
+  ([ `Error of FS.error | `Ok of int64 ] -> string Lwt.t) -> string Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"dispatch.ml" 12 190 221 "dispatch.ml" 12 190 222
+type(
+  string
+)
+"dispatch.ml" 12 190 206 "dispatch.ml" 12 190 222
+type(
+  FS.error
+)
+"dispatch.ml" 12 190 198 "dispatch.ml" 12 190 223
+type(
+  [ `Error of FS.error | `Ok of int64 ]
+)
+"dispatch.ml" 12 190 227 "dispatch.ml" 12 190 231
+type(
+  exn -> string Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"dispatch.ml" 12 190 242 "dispatch.ml" 12 190 249
+type(
+  string
+)
+"dispatch.ml" 12 190 250 "dispatch.ml" 12 190 251
+type(
+  string -> string -> string
+)
+ident(
+  ext_ref Pervasives.( ^ )
+)
+"dispatch.ml" 12 190 252 "dispatch.ml" 12 190 256
+type(
+  string
+)
+ident(
+  int_ref name "dispatch.ml" 9 126 142 "dispatch.ml" 9 126 146
+)
+"dispatch.ml" 12 190 242 "dispatch.ml" 12 190 256
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 12 190 233 "dispatch.ml" 12 190 257
+type(
+  exn
+)
+"dispatch.ml" 12 190 227 "dispatch.ml" 12 190 258
+call(
+  tail
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 13 259 271 "dispatch.ml" 13 259 275
+type(
+  int64
+)
+ident(
+  def size "dispatch.ml" 14 279 287 "dispatch.ml" 17 417 466
+)
+"dispatch.ml" 13 259 267 "dispatch.ml" 13 259 275
+type(
+  [ `Error of FS.error | `Ok of int64 ]
+)
+"dispatch.ml" 14 279 287 "dispatch.ml" 14 279 294
+type(
+  FS.t ->
+  string ->
+  int ->
+  int -> [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ] FS.io
+)
+ident(
+  ext_ref FS.read
+)
+"dispatch.ml" 14 279 295 "dispatch.ml" 14 279 297
+type(
+  FS.t
+)
+ident(
+  int_ref fs "dispatch.ml" 7 101 115 "dispatch.ml" 7 101 117
+)
+"dispatch.ml" 14 279 298 "dispatch.ml" 14 279 302
+type(
+  string
+)
+ident(
+  int_ref name "dispatch.ml" 9 126 142 "dispatch.ml" 9 126 146
+)
+"dispatch.ml" 14 279 303 "dispatch.ml" 14 279 304
+type(
+  int
+)
+"dispatch.ml" 14 279 306 "dispatch.ml" 14 279 318
+type(
+  int64 -> int
+)
+ident(
+  ext_ref Int64.to_int
+)
+"dispatch.ml" 14 279 319 "dispatch.ml" 14 279 323
+type(
+  int64
+)
+ident(
+  int_ref size "dispatch.ml" 13 259 271 "dispatch.ml" 13 259 275
+)
+"dispatch.ml" 14 279 306 "dispatch.ml" 14 279 323
+type(
+  int
+)
+"dispatch.ml" 14 279 287 "dispatch.ml" 14 279 324
+call(
+  stack
+)
+type(
+  [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ] FS.io
+)
+"dispatch.ml" 15 325 333 "dispatch.ml" 15 325 336
+type(
+  [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ] Lwt.t ->
+  ([ `Error of FS.error | `Ok of FS.page_aligned_buffer list ] ->
+   string Lwt.t) ->
+  string Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"dispatch.ml" 16 346 379 "dispatch.ml" 16 346 380
+type(
+  string
+)
+"dispatch.ml" 16 346 364 "dispatch.ml" 16 346 380
+type(
+  FS.error
+)
+"dispatch.ml" 16 346 356 "dispatch.ml" 16 346 381
+type(
+  [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ]
+)
+"dispatch.ml" 16 346 385 "dispatch.ml" 16 346 389
+type(
+  exn -> string Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"dispatch.ml" 16 346 400 "dispatch.ml" 16 346 407
+type(
+  string
+)
+"dispatch.ml" 16 346 408 "dispatch.ml" 16 346 409
+type(
+  string -> string -> string
+)
+ident(
+  ext_ref Pervasives.( ^ )
+)
+"dispatch.ml" 16 346 410 "dispatch.ml" 16 346 414
+type(
+  string
+)
+ident(
+  int_ref name "dispatch.ml" 9 126 142 "dispatch.ml" 9 126 146
+)
+"dispatch.ml" 16 346 400 "dispatch.ml" 16 346 414
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 16 346 391 "dispatch.ml" 16 346 415
+type(
+  exn
+)
+"dispatch.ml" 16 346 385 "dispatch.ml" 16 346 416
+call(
+  tail
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 17 417 431 "dispatch.ml" 17 417 435
+type(
+  FS.page_aligned_buffer list
+)
+ident(
+  def bufs "dispatch.ml" 17 417 439 "dispatch.ml" 17 417 466
+)
+"dispatch.ml" 17 417 427 "dispatch.ml" 17 417 435
+type(
+  [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ]
+)
+"dispatch.ml" 17 417 439 "dispatch.ml" 17 417 445
+type(
+  string -> string Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"dispatch.ml" 17 417 447 "dispatch.ml" 17 417 460
+type(
+  Cstruct.t list -> string
+)
+ident(
+  ext_ref Cstruct.copyv
+)
+"dispatch.ml" 17 417 461 "dispatch.ml" 17 417 465
+type(
+  FS.page_aligned_buffer list
+)
+ident(
+  int_ref bufs "dispatch.ml" 17 417 431 "dispatch.ml" 17 417 435
+)
+"dispatch.ml" 17 417 447 "dispatch.ml" 17 417 465
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 17 417 439 "dispatch.ml" 17 417 466
+call(
+  tail
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 15 325 337 "dispatch.ml" 17 417 466
+type(
+  [ `Error of FS.error | `Ok of FS.page_aligned_buffer list ] -> string Lwt.t
+)
+"dispatch.ml" 14 279 287 "dispatch.ml" 17 417 466
+call(
+  tail
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 11 171 181 "dispatch.ml" 17 417 466
+type(
+  [ `Error of FS.error | `Ok of int64 ] -> string Lwt.t
+)
+"dispatch.ml" 10 149 155 "dispatch.ml" 17 417 466
+call(
+  tail
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 9 126 142 "dispatch.ml" 17 417 466
+type(
+  string -> string Lwt.t
+)
+"dispatch.ml" 21 526 534 "dispatch.ml" 21 526 544
+type(
+  Uri.t -> string list
+)
+ident(
+  def split_path "dispatch.ml" 32 821 825 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 21 526 545 "dispatch.ml" 21 526 548
+type(
+  Uri.t
+)
+ident(
+  def uri "dispatch.ml" 22 551 557 "dispatch.ml" 28 718 779
+)
+"dispatch.ml" 22 551 561 "dispatch.ml" 22 551 565
+type(
+  string
+)
+ident(
+  def path "dispatch.ml" 23 584 590 "dispatch.ml" 28 718 779
+)
+"dispatch.ml" 22 551 568 "dispatch.ml" 22 551 576
+type(
+  Uri.t -> string
+)
+ident(
+  ext_ref Uri.path
+)
+"dispatch.ml" 22 551 577 "dispatch.ml" 22 551 580
+type(
+  Uri.t
+)
+ident(
+  int_ref uri "dispatch.ml" 21 526 545 "dispatch.ml" 21 526 548
+)
+"dispatch.ml" 22 551 568 "dispatch.ml" 22 551 580
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 23 584 598 "dispatch.ml" 23 584 601
+type(
+  string list -> string list
+)
+ident(
+  def aux "dispatch.ml" 23 584 590 "dispatch.ml" 28 718 779
+)
+"dispatch.ml" 24 613 623 "dispatch.ml" 24 613 625
+type(
+  string list
+)
+"dispatch.ml" 24 613 629 "dispatch.ml" 24 613 631
+type(
+  string list
+)
+type(
+  string
+)
+"dispatch.ml" 24 613 628 "dispatch.ml" 24 613 632
+type(
+  string list
+)
+"dispatch.ml" 24 613 623 "dispatch.ml" 24 613 632
+type(
+  string list
+)
+"dispatch.ml" 24 613 636 "dispatch.ml" 24 613 638
+type(
+  string list
+)
+"dispatch.ml" 25 639 649 "dispatch.ml" 25 639 651
+type(
+  string
+)
+ident(
+  def hd "dispatch.ml" 25 639 659 "dispatch.ml" 25 639 671
+)
+"dispatch.ml" 25 639 653 "dispatch.ml" 25 639 655
+type(
+  string list
+)
+ident(
+  def tl "dispatch.ml" 25 639 659 "dispatch.ml" 25 639 671
+)
+"dispatch.ml" 25 639 649 "dispatch.ml" 25 639 655
+type(
+  string list
+)
+"dispatch.ml" 25 639 659 "dispatch.ml" 25 639 661
+type(
+  string
+)
+ident(
+  int_ref hd "dispatch.ml" 25 639 649 "dispatch.ml" 25 639 651
+)
+"dispatch.ml" 25 639 665 "dispatch.ml" 25 639 668
+type(
+  string list -> string list
+)
+ident(
+  int_ref aux "dispatch.ml" 23 584 598 "dispatch.ml" 23 584 601
+)
+"dispatch.ml" 25 639 669 "dispatch.ml" 25 639 671
+type(
+  string list
+)
+ident(
+  int_ref tl "dispatch.ml" 25 639 653 "dispatch.ml" 25 639 655
+)
+"dispatch.ml" 25 639 665 "dispatch.ml" 25 639 671
+call(
+  stack
+)
+type(
+  string list
+)
+"dispatch.ml" 25 639 659 "dispatch.ml" 25 639 671
+type(
+  string list
+)
+"dispatch.ml" 23 584 604 "dispatch.ml" 25 639 671
+type(
+  string list -> string list
+)
+"dispatch.ml" 27 681 687 "dispatch.ml" 27 681 698
+type(
+  (string -> bool) -> string list -> string list
+)
+ident(
+  ext_ref List.filter
+)
+"dispatch.ml" 27 681 704 "dispatch.ml" 27 681 705
+type(
+  string
+)
+ident(
+  def e "dispatch.ml" 27 681 709 "dispatch.ml" 27 681 716
+)
+"dispatch.ml" 27 681 709 "dispatch.ml" 27 681 710
+type(
+  string
+)
+ident(
+  int_ref e "dispatch.ml" 27 681 704 "dispatch.ml" 27 681 705
+)
+"dispatch.ml" 27 681 711 "dispatch.ml" 27 681 713
+type(
+  string -> string -> bool
+)
+ident(
+  ext_ref Pervasives.( <> )
+)
+"dispatch.ml" 27 681 714 "dispatch.ml" 27 681 716
+type(
+  string
+)
+"dispatch.ml" 27 681 709 "dispatch.ml" 27 681 716
+type(
+  bool
+)
+"dispatch.ml" 27 681 704 "dispatch.ml" 27 681 716
+type(
+  string -> bool
+)
+"dispatch.ml" 28 718 727 "dispatch.ml" 28 718 730
+type(
+  string list -> string list
+)
+ident(
+  int_ref aux "dispatch.ml" 23 584 598 "dispatch.ml" 23 584 601
+)
+"dispatch.ml" 28 718 740 "dispatch.ml" 28 718 751
+type(
+  Re_str.regexp -> string -> string list
+)
+ident(
+  ext_ref Re_str.split_delim
+)
+"dispatch.ml" 28 718 753 "dispatch.ml" 28 718 766
+type(
+  string -> Re_str.regexp
+)
+ident(
+  ext_ref Re_str.regexp_string
+)
+"dispatch.ml" 28 718 767 "dispatch.ml" 28 718 770
+type(
+  string
+)
+"dispatch.ml" 28 718 753 "dispatch.ml" 28 718 770
+call(
+  stack
+)
+type(
+  Re_str.regexp
+)
+"dispatch.ml" 28 718 772 "dispatch.ml" 28 718 776
+type(
+  string
+)
+ident(
+  int_ref path "dispatch.ml" 22 551 561 "dispatch.ml" 22 551 565
+)
+"dispatch.ml" 28 718 740 "dispatch.ml" 28 718 776
+call(
+  stack
+)
+type(
+  string list
+)
+"dispatch.ml" 28 718 727 "dispatch.ml" 28 718 778
+call(
+  stack
+)
+type(
+  string list
+)
+"dispatch.ml" 27 681 687 "dispatch.ml" 28 718 779
+call(
+  tail
+)
+type(
+  string list
+)
+"dispatch.ml" 23 584 590 "dispatch.ml" 28 718 779
+type(
+  string list
+)
+"dispatch.ml" 22 551 557 "dispatch.ml" 28 718 779
+type(
+  string list
+)
+"dispatch.ml" 21 526 545 "dispatch.ml" 28 718 779
+type(
+  Uri.t -> string list
+)
+"dispatch.ml" 32 821 829 "dispatch.ml" 32 821 839
+type(
+  string list -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  def dispatcher "dispatch.ml" 53 1561 1565 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 32 821 840 "dispatch.ml" 32 821 848
+type(
+  string list
+)
+ident(
+  def segments "dispatch.ml" 39 1175 1181 "dispatch.ml" 49 1485 1527
+)
+"dispatch.ml" 39 1175 1185 "dispatch.ml" 39 1175 1189
+type(
+  string
+)
+ident(
+  def path "dispatch.ml" 40 1223 1229 "dispatch.ml" 49 1485 1527
+)
+"dispatch.ml" 39 1175 1192 "dispatch.ml" 39 1175 1205
+type(
+  string -> string list -> string
+)
+ident(
+  ext_ref String.concat
+)
+"dispatch.ml" 39 1175 1206 "dispatch.ml" 39 1175 1209
+type(
+  string
+)
+"dispatch.ml" 39 1175 1210 "dispatch.ml" 39 1175 1218
+type(
+  string list
+)
+ident(
+  int_ref segments "dispatch.ml" 32 821 840 "dispatch.ml" 32 821 848
+)
+"dispatch.ml" 39 1175 1192 "dispatch.ml" 39 1175 1218
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 41 1237 1245 "dispatch.ml" 41 1237 1252
+type(
+  string -> string Lwt.t
+)
+ident(
+  int_ref read_fs "dispatch.ml" 9 126 134 "dispatch.ml" 9 126 141
+)
+"dispatch.ml" 41 1237 1253 "dispatch.ml" 41 1237 1257
+type(
+  string
+)
+ident(
+  int_ref path "dispatch.ml" 39 1175 1185 "dispatch.ml" 39 1175 1189
+)
+"dispatch.ml" 41 1237 1245 "dispatch.ml" 41 1237 1257
+call(
+  stack
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 42 1259 1267 "dispatch.ml" 42 1259 1270
+type(
+  string Lwt.t ->
+  (string -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"dispatch.ml" 42 1259 1275 "dispatch.ml" 42 1259 1279
+type(
+  string
+)
+ident(
+  def body "dispatch.ml" 43 1284 1292 "dispatch.ml" 43 1284 1329
+)
+"dispatch.ml" 43 1284 1292 "dispatch.ml" 43 1284 1308
+type(
+  ?headers:Cohttp.Header.t ->
+  status:Cohttp.Code.status_code ->
+  body:string -> unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref S.respond_string
+)
+"dispatch.ml" 43 1284 1317 "dispatch.ml" 43 1284 1320
+type(
+  Cohttp.Code.status_code
+)
+"dispatch.ml" 43 1284 1321 "dispatch.ml" 43 1284 1326
+type(
+  string
+)
+ident(
+  int_ref body "dispatch.ml" 42 1259 1275 "dispatch.ml" 42 1259 1279
+)
+"dispatch.ml" 43 1284 1327 "dispatch.ml" 43 1284 1329
+type(
+  unit
+)
+"dispatch.ml" 43 1284 1292 "dispatch.ml" 43 1284 1329
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 42 1259 1275 "dispatch.ml" 43 1284 1329
+type(
+  string -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 41 1237 1245 "dispatch.ml" 43 1284 1329
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 44 1331 1342 "dispatch.ml" 44 1331 1345
+type(
+  exn
+)
+ident(
+  def exn "dispatch.ml" 45 1350 1358 "dispatch.ml" 49 1485 1527
+)
+"dispatch.ml" 46 1367 1377 "dispatch.ml" 46 1367 1384
+type(
+  string -> string Lwt.t
+)
+ident(
+  int_ref read_fs "dispatch.ml" 9 126 134 "dispatch.ml" 9 126 141
+)
+"dispatch.ml" 46 1367 1386 "dispatch.ml" 46 1367 1390
+type(
+  string
+)
+ident(
+  int_ref path "dispatch.ml" 39 1175 1185 "dispatch.ml" 39 1175 1189
+)
+"dispatch.ml" 46 1367 1391 "dispatch.ml" 46 1367 1392
+type(
+  string -> string -> string
+)
+ident(
+  ext_ref Pervasives.( ^ )
+)
+"dispatch.ml" 46 1367 1393 "dispatch.ml" 46 1367 1406
+type(
+  string
+)
+"dispatch.ml" 46 1367 1386 "dispatch.ml" 46 1367 1406
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 46 1367 1377 "dispatch.ml" 46 1367 1407
+call(
+  stack
+)
+type(
+  string Lwt.t
+)
+"dispatch.ml" 47 1409 1419 "dispatch.ml" 47 1409 1422
+type(
+  string Lwt.t ->
+  (string -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"dispatch.ml" 47 1409 1427 "dispatch.ml" 47 1409 1431
+type(
+  string
+)
+ident(
+  def body "dispatch.ml" 48 1436 1446 "dispatch.ml" 48 1436 1483
+)
+"dispatch.ml" 48 1436 1446 "dispatch.ml" 48 1436 1462
+type(
+  ?headers:Cohttp.Header.t ->
+  status:Cohttp.Code.status_code ->
+  body:string -> unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref S.respond_string
+)
+"dispatch.ml" 48 1436 1471 "dispatch.ml" 48 1436 1474
+type(
+  Cohttp.Code.status_code
+)
+"dispatch.ml" 48 1436 1475 "dispatch.ml" 48 1436 1480
+type(
+  string
+)
+ident(
+  int_ref body "dispatch.ml" 47 1409 1427 "dispatch.ml" 47 1409 1431
+)
+"dispatch.ml" 48 1436 1481 "dispatch.ml" 48 1436 1483
+type(
+  unit
+)
+"dispatch.ml" 48 1436 1446 "dispatch.ml" 48 1436 1483
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 47 1409 1427 "dispatch.ml" 48 1436 1483
+type(
+  string -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 46 1367 1377 "dispatch.ml" 48 1436 1483
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 49 1485 1498 "dispatch.ml" 49 1485 1501
+type(
+  exn
+)
+ident(
+  def exn "dispatch.ml" 49 1485 1505 "dispatch.ml" 49 1485 1527
+)
+"dispatch.ml" 49 1485 1505 "dispatch.ml" 49 1485 1524
+type(
+  ?uri:Uri.t -> unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref S.respond_not_found
+)
+"dispatch.ml" 49 1485 1525 "dispatch.ml" 49 1485 1527
+type(
+  unit
+)
+"dispatch.ml" 49 1485 1505 "dispatch.ml" 49 1485 1527
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 45 1350 1358 "dispatch.ml" 49 1485 1527
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  exn -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  unit
+)
+type(
+  (unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (exn -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref Lwt.catch
+)
+"dispatch.ml" 40 1223 1229 "dispatch.ml" 49 1485 1527
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  exn -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+type(
+  unit
+)
+type(
+  (unit -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (exn -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t) ->
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  ext_ref Lwt.catch
+)
+"dispatch.ml" 39 1175 1181 "dispatch.ml" 49 1485 1527
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 32 821 840 "dispatch.ml" 49 1485 1527
+type(
+  string list -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 53 1561 1569 "dispatch.ml" 53 1561 1577
+type(
+  'b -> Cohttp.Request.t -> 'c -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  def callback "dispatch.ml" 57 1683 1687 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 53 1561 1578 "dispatch.ml" 53 1561 1585
+type(
+  'b
+)
+ident(
+  def conn_id "dispatch.ml" 53 1561 1586 "dispatch.ml" 55 1642 1675
+)
+"dispatch.ml" 53 1561 1586 "dispatch.ml" 53 1561 1593
+type(
+  Cohttp.Request.t
+)
+ident(
+  def request "dispatch.ml" 53 1561 1594 "dispatch.ml" 55 1642 1675
+)
+"dispatch.ml" 53 1561 1594 "dispatch.ml" 53 1561 1598
+type(
+  'c
+)
+ident(
+  def body "dispatch.ml" 54 1601 1607 "dispatch.ml" 55 1642 1675
+)
+"dispatch.ml" 54 1601 1611 "dispatch.ml" 54 1601 1614
+type(
+  Uri.t
+)
+ident(
+  def uri "dispatch.ml" 55 1642 1648 "dispatch.ml" 55 1642 1675
+)
+"dispatch.ml" 54 1601 1617 "dispatch.ml" 54 1601 1630
+type(
+  Cohttp.Request.t -> Uri.t
+)
+ident(
+  ext_ref S.Request.uri
+)
+"dispatch.ml" 54 1601 1631 "dispatch.ml" 54 1601 1638
+type(
+  Cohttp.Request.t
+)
+ident(
+  int_ref request "dispatch.ml" 53 1561 1586 "dispatch.ml" 53 1561 1593
+)
+"dispatch.ml" 54 1601 1617 "dispatch.ml" 54 1601 1638
+call(
+  stack
+)
+type(
+  Uri.t
+)
+"dispatch.ml" 55 1642 1648 "dispatch.ml" 55 1642 1658
+type(
+  string list -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  int_ref dispatcher "dispatch.ml" 32 821 829 "dispatch.ml" 32 821 839
+)
+"dispatch.ml" 55 1642 1660 "dispatch.ml" 55 1642 1670
+type(
+  Uri.t -> string list
+)
+ident(
+  int_ref split_path "dispatch.ml" 21 526 534 "dispatch.ml" 21 526 544
+)
+"dispatch.ml" 55 1642 1671 "dispatch.ml" 55 1642 1674
+type(
+  Uri.t
+)
+ident(
+  int_ref uri "dispatch.ml" 54 1601 1611 "dispatch.ml" 54 1601 1614
+)
+"dispatch.ml" 55 1642 1660 "dispatch.ml" 55 1642 1674
+call(
+  stack
+)
+type(
+  string list
+)
+"dispatch.ml" 55 1642 1648 "dispatch.ml" 55 1642 1675
+call(
+  tail
+)
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 54 1601 1607 "dispatch.ml" 55 1642 1675
+type(
+  (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 53 1561 1594 "dispatch.ml" 55 1642 1675
+type(
+  'c -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 53 1561 1586 "dispatch.ml" 55 1642 1675
+type(
+  Cohttp.Request.t -> 'c -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 53 1561 1578 "dispatch.ml" 55 1642 1675
+type(
+  'b -> Cohttp.Request.t -> 'c -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+"dispatch.ml" 57 1683 1691 "dispatch.ml" 57 1683 1702
+type(
+  'd * Cohttp.Connection.t -> unit -> unit
+)
+ident(
+  def conn_closed "dispatch.ml" 61 1834 1838 "dispatch.ml" 61 1834 1870
+)
+"dispatch.ml" 57 1683 1704 "dispatch.ml" 57 1683 1705
+type(
+  'd
+)
+"dispatch.ml" 57 1683 1706 "dispatch.ml" 57 1683 1713
+type(
+  Cohttp.Connection.t
+)
+ident(
+  def conn_id "dispatch.ml" 57 1683 1715 "dispatch.ml" 59 1775 1826
+)
+"dispatch.ml" 57 1683 1704 "dispatch.ml" 57 1683 1713
+type(
+  'd * Cohttp.Connection.t
+)
+"dispatch.ml" 57 1683 1715 "dispatch.ml" 57 1683 1717
+type(
+  unit
+)
+"dispatch.ml" 58 1720 1730 "dispatch.ml" 58 1720 1733
+type(
+  string
+)
+ident(
+  def cid "dispatch.ml" 59 1775 1781 "dispatch.ml" 59 1775 1826
+)
+"dispatch.ml" 58 1720 1736 "dispatch.ml" 58 1720 1763
+type(
+  Cohttp.Connection.t -> string
+)
+ident(
+  ext_ref Cohttp.Connection.to_string
+)
+"dispatch.ml" 58 1720 1764 "dispatch.ml" 58 1720 1771
+type(
+  Cohttp.Connection.t
+)
+ident(
+  int_ref conn_id "dispatch.ml" 57 1683 1706 "dispatch.ml" 57 1683 1713
+)
+"dispatch.ml" 58 1720 1736 "dispatch.ml" 58 1720 1771
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 59 1775 1781 "dispatch.ml" 59 1775 1786
+type(
+  C.t -> string -> unit
+)
+ident(
+  ext_ref C.log
+)
+"dispatch.ml" 59 1775 1787 "dispatch.ml" 59 1775 1788
+type(
+  C.t
+)
+ident(
+  int_ref c "dispatch.ml" 7 101 113 "dispatch.ml" 7 101 114
+)
+"dispatch.ml" 59 1775 1790 "dispatch.ml" 59 1775 1804
+type(
+  (string -> string, unit, string) format -> string -> string
+)
+ident(
+  ext_ref Printf.sprintf
+)
+"dispatch.ml" 59 1775 1805 "dispatch.ml" 59 1775 1821
+type(
+  (string -> string, unit, string) format
+)
+"dispatch.ml" 59 1775 1822 "dispatch.ml" 59 1775 1825
+type(
+  string
+)
+ident(
+  int_ref cid "dispatch.ml" 58 1720 1730 "dispatch.ml" 58 1720 1733
+)
+"dispatch.ml" 59 1775 1790 "dispatch.ml" 59 1775 1825
+call(
+  stack
+)
+type(
+  string
+)
+"dispatch.ml" 59 1775 1781 "dispatch.ml" 59 1775 1826
+call(
+  tail
+)
+type(
+  unit
+)
+"dispatch.ml" 58 1720 1726 "dispatch.ml" 59 1775 1826
+type(
+  unit
+)
+"dispatch.ml" 57 1683 1715 "dispatch.ml" 59 1775 1826
+type(
+  unit -> unit
+)
+"dispatch.ml" 57 1683 1703 "dispatch.ml" 59 1775 1826
+type(
+  'd * Cohttp.Connection.t -> unit -> unit
+)
+"dispatch.ml" 61 1834 1838 "dispatch.ml" 61 1834 1842
+type(
+  S.t -> 'a
+)
+ident(
+  int_ref http "dispatch.ml" 7 101 118 "dispatch.ml" 7 101 122
+)
+"dispatch.ml" 61 1834 1845 "dispatch.ml" 61 1834 1855
+type(
+  S.IO.conn * Cohttp.Connection.t ->
+  Cohttp.Request.t ->
+  Cohttp_lwt_body.t -> (S.Response.t * Cohttp_lwt_body.t) Lwt.t
+)
+ident(
+  int_ref callback "dispatch.ml" 53 1561 1569 "dispatch.ml" 53 1561 1577
+)
+"dispatch.ml" 61 1834 1857 "dispatch.ml" 61 1834 1868
+type(
+  S.IO.conn * Cohttp.Connection.t -> unit -> unit
+)
+ident(
+  int_ref conn_closed "dispatch.ml" 57 1683 1691 "dispatch.ml" 57 1683 1702
+)
+"dispatch.ml" 61 1834 1843 "dispatch.ml" 61 1834 1870
+type(
+  S.t
+)
+"dispatch.ml" 61 1834 1838 "dispatch.ml" 61 1834 1870
+call(
+  tail
+)
+type(
+  'a
+)
+"dispatch.ml" 57 1683 1687 "dispatch.ml" 61 1834 1870
+type(
+  'a
+)
+"dispatch.ml" 53 1561 1565 "dispatch.ml" 61 1834 1870
+type(
+  'a
+)
+"dispatch.ml" 32 821 825 "dispatch.ml" 61 1834 1870
+type(
+  'a
+)
+"dispatch.ml" 21 526 530 "dispatch.ml" 61 1834 1870
+type(
+  'a
+)
+"dispatch.ml" 9 126 130 "dispatch.ml" 61 1834 1870
+type(
+  'a
+)
+"dispatch.ml" 7 101 118 "dispatch.ml" 61 1834 1870
+type(
+  (S.t -> 'a) -> 'a
+)
+"dispatch.ml" 7 101 115 "dispatch.ml" 61 1834 1870
+type(
+  FS.t -> (S.t -> 'a) -> 'a
+)
+"dispatch.ml" 7 101 113 "dispatch.ml" 61 1834 1870
+type(
+  C.t -> FS.t -> (S.t -> 'a) -> 'a
+)

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>A Set Of Certain Musings</title>
+    <description>A set of musings about coding, computers, and perhaps some other things...
+</description>
+    <link>http://christopherbothwell.com/</link>
+    <atom:link href="http://christopherbothwell.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 08 Dec 2014 12:44:22 -0600</pubDate>
+    <lastBuildDate>Mon, 08 Dec 2014 12:44:22 -0600</lastBuildDate>
+    <generator>Jekyll v2.5.2</generator>
+    
+      <item>
+        <title>Hello Linode</title>
+        <description>&lt;p&gt;It has been almost a week since my last post and I’ve been working on getting this blog setup on a Xen virtual machine. Most folks seem to be setting up their mirage kernels on Amazon’s EC2 instances or their private Xen cloud platforms. I thought it might be nice to try it out on a different public clould/Xen provider. &lt;/p&gt;
+
+&lt;h3 id=&quot;linode-and-mirage&quot;&gt;Linode and Mirage&lt;/h3&gt;
+
+&lt;p&gt;I haven’t been able to find a walk through or tutorial on how to get Mirage set up on Lindoe. Linode provides a number of default Linux distributions which can be installed from a single within the control panel. However, like AWS, they provide a pv-grub instance which can be used to boot a custom distribution. The caveat is that there are quite a few more steps which need to be taken to get your Mirage kernel off the ground. &lt;/p&gt;
+
+&lt;p&gt;The steps to getting this set up were pretty similar to the EC2 tutorial, however I encountered some major issues that were fixed by some minor tweaks of the steps. In the interest of time spent reading this post (also writing it) I won’t go too much into what the specific problems were. Suffice to say the menu.lst needs to be a little bit different than what is shown for EC2 on the &lt;a href=&quot;http://openmirage.org/wiki/xen-boot&quot;&gt;Mirage tutorial&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;Also, I haven’t yet worked out how to automate the installation. I’m pretty sure it can work similarly by installing a Linux distribution and then rsyncing in the kernel but I found that I could get the entire Mirage kernel installed on Linode without having to install a separate Linux distribution on the same node and I’d like to keep that as a feature. Again, I haven’t gotten the automation worked out yet, but it is coming. &lt;/p&gt;
+
+&lt;h3 id=&quot;getting-things-built-right&quot;&gt;Getting things built right&lt;/h3&gt;
+
+&lt;p&gt;When you build the unikernel you’ll have several options on how to build in networking. Linode by default will use DHCP which can make life easy if you compile your Mirage unikernel with DHCP enabled. Like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;env &lt;span class=&quot;nv&quot;&gt;DHCP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true &lt;/span&gt;mirage configure --xen
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make run&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;basic-steps-first&quot;&gt;Basic steps first&lt;/h3&gt;
+
+&lt;p&gt;I’m not going to walk through buying an account or setting it up, it is pretty straight forward on how to do. Once you have the account set up head over to the &lt;code&gt;Linodes&lt;/code&gt; tab and select the 1024 instance type. This is the single core 1024 GB node.&lt;/p&gt;
+
+&lt;p&gt;If you already have a Linode you may be dropped into a selection screen for Linodes, just select the one you’re going to put mirage on (in this case I’ve labeled mine ‘mirage’). &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linode-screenshot-1.png&quot; alt=&quot;linode-choices&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You’ll otherwise find your way onto the dashboard. From this screen we can set up our initial configuration. First we’re going to create our disk image, for this step you’ll want to click on the link &lt;code&gt;Create a new Disk Image&lt;/code&gt;. You’ll be provided a place to enter in some disk image information. We won’t need a large disk image (remember we won’t be installing Linux), so I’ve elected to do about 1 GB with ext4 and labeled it &lt;code&gt;mirage-disk&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/mirage-disk-image.png&quot; alt=&quot;disk-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From here we’ll look up to the ‘Dashboard’ section of the Dashboard (I know :-( look at the image to see what I mean). We’re going to click on the &lt;code&gt;Create a new Configuration Profile&lt;/code&gt; link. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/dashboard-configuration.png&quot; alt=&quot;dash-board-section&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next page has a large number of options on it, but there aren’t really very many which we need to fill in. Run Level and Memory Limit can be left alone. I like to label things, because later on I’ll forget what I was doing and so I’d suggest you also label this configuration. The kernel needs to be pv-grub-x86_64 and we’ll assign our single block device, the ext4 partition, to /dev/xvda (not the Finnix iso). Everything else can be left in the default state. Don’t forget to save the changes at the bottom.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/configuration-profile.png&quot; alt=&quot;configuration-profile&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;bowels-of-the-beast&quot;&gt;Bowels of the Beast&lt;/h3&gt;
+
+&lt;p&gt;So far we’ve just been manipulating the GUI to get the configuration that we want. Unfortunately, we’re going to need to do some command line work to put this thing into action. &lt;/p&gt;
+
+&lt;p&gt;In order to get the image onto the server we’re going to rsync it to our disk image. To do that we would ordinarily need either access to the host or an environment which supported the other end of rsync and ssh (like another Linux distribution). &lt;/p&gt;
+
+&lt;p&gt;As stated before, we’re not going to install another Linux distribution here. Instead Linode provides a rescue environment they call lish and a rescue image called Finnix. To boot to Finnix we need to click on the &lt;code&gt;Rescue&lt;/code&gt; tab and click on &lt;code&gt;Reboot into Rescue Mode&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/rescue-layer.png&quot; alt=&quot;rescue-layer&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once we click on &lt;code&gt;Reboot into Rescue Mode&lt;/code&gt;, we’ll be dropped back into the dashboard and the instance will begin starting up into rescue mode. Next we’ll need to click on the &lt;code&gt;Remote Access&lt;/code&gt; tab. &lt;/p&gt;
+
+&lt;p&gt;This tab has some information on how to access the system remotely. In this instance we want to take a look toward the bottom of the page under the &lt;code&gt;Console Access&lt;/code&gt; section where it says &lt;code&gt;Lish via ssh&lt;/code&gt;. &lt;/p&gt;
+
+&lt;p&gt;It will contain a line detailing how to ssh into the rescue layer (really lish, but since we’ve started Finnix we’ll be dropped into that). Copy and paste this line into your terminal. You’ll be prompted for a password which will be the account password for Linode. &lt;/p&gt;
+
+&lt;p&gt;From here there are only a few more steps we need to take to get our Mirage kernel working. We’re going to need to mount the /dev/xvda disk image and add a few directories and files to it.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mount /dev/xvda /media/
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /media/ 
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir -p boot/grub&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After making the boot and grub directories on /dev/xvda, we can then create the boot/grub/menu.lst file. It should contain text similar to the following (NOTE: your mirage kernel may not have the same name but should generally end with .xen). You’ll need to use nano or cat fu for this as that’s what is installed on Finnix. You could also rsync this file over using similar instructions to getting the kernel on the server. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cat &amp;gt; /media/boot/grub/menu.lst &lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt; timeout 1&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt; title Mirage&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt; root (hd0)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt; kernel /boot/mir-www.xen root=/dev/xvda ro quiet&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;gt; EOF&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After this is done we’ll need to set up a root password and start ssh so we can get the Mirage kernel onto the Linode. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;passwd
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully 
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;service ssh start&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once ssh has started we can then rsync the kernel over ssh from our local work station. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rsync -avPz mir-www.xen root@ip.address.ofyour.linode:/media/boot/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;its-alive&quot;&gt;It’s Alive!&lt;/h3&gt;
+
+&lt;p&gt;After this is complete, go back to your Linode Dashboard (under the dashboard tab) and click &lt;code&gt;Reboot&lt;/code&gt;. If all goes well you should be able to navigate to your Linode’s IP in a browser and see it serving a page. (NOTE: Linode recommends a swap partition and not having one will prompt a warring on the Dashboard. Since we aren’t using Linux I don’t believe that is too much of a concern.) &lt;/p&gt;
+
+&lt;p&gt;At this point you know as much as I do about how to get started with Mirage on Linode. I’m still learning a bit about Jekyll and getting images working was my lesson for the day. I’ll see about getting some sort of comment system up as I’m sure there may be some questions about how to do this. &lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Dec 2014 05:31:44 -0600</pubDate>
+        <link>http://christopherbothwell.com/ocaml/mirage/linode/2014/12/08/hello-linode.html</link>
+        <guid isPermaLink="true">http://christopherbothwell.com/ocaml/mirage/linode/2014/12/08/hello-linode.html</guid>
+        
+        
+        <category>ocaml</category>
+        
+        <category>mirage</category>
+        
+        <category>linode</category>
+        
+      </item>
+    
+      <item>
+        <title>About Not Found</title>
+        <description>&lt;p&gt;After getting the blog set up initially running in Jekyll things seemed to be moving along smoothly to pushing this thing up to one of the various cloud platforms which might support running a mirage unikernel. The next testing phase was to get this set up to run locally inside the Unix option on my workstation. &lt;/p&gt;
+
+&lt;h2 id=&quot;a-simple-mirage-project&quot;&gt;A Simple Mirage Project&lt;/h2&gt;
+
+&lt;p&gt;The mirage project suggests starting with the &lt;a href=&quot;https://github.com/mirage/mirage-skeleton&quot;&gt;mirage-skeleton&lt;/a&gt; project to build some example unikernels. Basic work in getting the examples built can be found on the &lt;a href=&quot;http://www.openmirage.org/wiki/hello-world&quot;&gt;mirage website&lt;/a&gt;. Mirage leverages the powerful Ocaml module system, specifically &lt;a href=&quot;https://realworldocaml.org/v1/en/html/functors.html&quot;&gt;functors&lt;/a&gt; to abstract away the fact that you can use different backends. During the build phase environment variables and options can be passed to the &lt;code&gt;mirage&lt;/code&gt; tool to set up specific backends… at least… I believe that’s how it works. &lt;/p&gt;
+
+&lt;p&gt;Ocaml is sufficiently different than the curly brace languages I’m used to and Mirage still seems a bit like black magic right now, so my confidence about that being the case is appropriately limited. Kindly, however, there is a static_website folder from the mirage-skeleton project that contains a basic unikernel for serving html pages from the htdocs folder that can take a complied Jekyll site (really any static site) and serve it. &lt;/p&gt;
+
+&lt;p&gt;After moving some files around and getting the basic project to build without my Jekyll site, it was time to try to get the static blog in that htdocs folder. Jekyll lets you configure a build directory from the _config.yml file, so I opted to let Jekyll do the work for me. I dumped my blog folder inside of a copy of the static_webstie folder and added a &lt;code&gt;destination: ../htdocs/&lt;/code&gt; to the _config.yml file and ran the &lt;code&gt;jekyll build&lt;/code&gt; command. &lt;/p&gt;
+
+&lt;p&gt;Next I configured the project to build with the Unix option. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;static_website
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mirage configure --unix
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo ./mir-www&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Things built without issue and I was ready to test things in my browser. To do that I needed to set up the tuntap device in a separate terminal. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo ifconfig tap0 10.0.0.1 netmask 255.255.255.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Success! Visiting http://10.0.0.2 in Firefox brings up the home page of the blog. The next question, do the posts load? Yes! My first post loads without issue. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/about&quot;&gt;About Page&lt;/a&gt;…nope. In flat, black letters &lt;code&gt;Not found&lt;/code&gt; stood irreverently. &lt;/p&gt;
+
+&lt;h2 id=&quot;groping-in-the-dark&quot;&gt;Groping In The Dark&lt;/h2&gt;
+
+&lt;p&gt;What had thus far been smooth sailing over calm seas had taking a turn for the bad. Getting a basic site to be served by mirage was going to be more trial by fire than victory lap. &lt;/p&gt;
+
+&lt;p&gt;Okay, so how to I trouble shoot this? It’s not like there’s an Apache log spewing out helpful error messages. The console has some output related to ARP routing, but no helpful errors related to http. &lt;/p&gt;
+
+&lt;p&gt;I took a look at the files Jekyll had generated in the htdocs folder. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ls
+about  css  feed.xml  index.html  jekyll&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Interestingly, &lt;code&gt;about&lt;/code&gt; is a folder and not a file. Which makes sense, I just didn’t think of it at the time of the error. Next question was, is there anything in the &lt;code&gt;about&lt;/code&gt; folder? &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ls about
+index.html&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Yes, index.html. Surely if the index.html is served from the root folder it should be served from any folder, right? &lt;/p&gt;
+
+&lt;p&gt;Next step was to take a look at the Ocaml code. Yes, the black magic. &lt;/p&gt;
+
+&lt;h2 id=&quot;staring-into-the-sun&quot;&gt;Staring Into The Sun&lt;/h2&gt;
+
+&lt;p&gt;A Mirage unikernel is broken down into a couple of different required files. There’s one file which is dedicated to the configuration, called  config.ml. This is the file where the magic really happens. At compile time it generates an main.ml file from the various devices you’ve set up for it to use. They are then passed into the project’s root ml file, in this case dispatch.ml at build time and a magical main.ml file is born…black magical. &lt;/p&gt;
+
+&lt;p&gt;With this basic knowledge I took a guess at where the problem was, the dispatch.ml file. The dispatch.ml file only has a few functions and while sparsely documented, it is surprisingly straight forward about what is going on.   &lt;/p&gt;
+
+&lt;p&gt;Top of the file opens a few modules which are needed to do things like threading and logging. After that the Main module is parametrised by several modules, the basic console, a file system, and an http server. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;k&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lwt&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Printf&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;V1_LWT&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CONSOLE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;KV_RO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;Cohttp_lwt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The http server, S, serves files stored on the file system. You know, like a normal http server. This part appears to occur inside the &lt;code&gt;dispatcher&lt;/code&gt; function. A list of strings is checked if it is empty or not. An empty list adds the &lt;code&gt;index.html&lt;/code&gt; string to a list and calls dispatcher again…so it isn’t empty the second time. A non-empty path is assembled into a single string and the server tries to read the file from the file system. If it cannot find the file it returns my irreverent &lt;code&gt;Not found&lt;/code&gt; error. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;c&quot;&gt;(* dispatch non-file URLs *)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;rec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;index.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;segments&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concat&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;segments&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;try_lwt&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;read_fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nn&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;respond_string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;OK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nn&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;respond_not_found&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;read_fs path&lt;/code&gt; takes the path and passes it to the &lt;code&gt;read_fs&lt;/code&gt; function where the file is looked up on the device. This is a &lt;a href=&quot;https://www.youtube.com/watch?v=ZhuHCtR3xq8&quot;&gt;monad&lt;/a&gt;, read_fs returns some string contained in an &lt;code&gt;Lwt.t&lt;/code&gt;, so the &lt;code&gt;&amp;gt;&amp;gt;=&lt;/code&gt; operator shoves whatever is returned by that &lt;code&gt;Lwt.t&lt;/code&gt; into the variable &lt;code&gt;body&lt;/code&gt; of the next function. Ocaml has labeled arguments (a nice feature for any language) and &lt;code&gt;~body&lt;/code&gt; is short hand for &lt;code&gt;~body:body&lt;/code&gt; (in case you were confused by that). &lt;/p&gt;
+
+&lt;p&gt;Couple of things to note about the above code. I’m not sure why this needs to be recursive. Not that recursion is a bad thing in Ocaml, but it just calls dispatcher at most twice with &lt;code&gt;[&quot;index.html&quot;]&lt;/code&gt; in the list the second time. I suspect theres a more graceful way to deal with this (NOTE: my solution is probably not much better for this). Also and more importantly, it only serves the index.html page if and only if it is the root path. That is: it won’t serve /about/index.html as /about/ like I want (and I guess Jekyll too). &lt;/p&gt;
+
+&lt;p&gt;So now I need to find a way to change this code so it’ll work for Jekyll. This shouldn’t be too hard. I just need to find out how to determine if this path is actually a file or a directory. Next stop the &lt;a href=&quot;http://mirage.github.io/&quot;&gt;Mirage Documentation&lt;/a&gt;. &lt;/p&gt;
+
+&lt;h2 id=&quot;taking-a-wrong-turn&quot;&gt;Taking A Wrong Turn&lt;/h2&gt;
+
+&lt;p&gt;Okay, there’s a lot here and I’m not sure what module I’m using here for the file system. It makes sense to stat the file to see if it is a directory or not. I took a look higher up in the code to see what functions were being called on the FS module. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;read_fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+  &lt;span class=&quot;nn&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Unknown_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;_)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Failure&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;read &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Ok&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+     &lt;span class=&quot;nn&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;Int64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Error&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Unknown_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;_)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Failure&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;read &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Ok&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bufs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;Cstruct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copyv&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bufs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Okay, so there is a &lt;code&gt;FS.size&lt;/code&gt; function and a &lt;code&gt;FS.read&lt;/code&gt; function called here. I could try to see how things are working in the config.ml file. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lowercase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;Unix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;FS&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;fat&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Fat&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;_&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Crunch&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Not_found&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;Crunch&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Fat&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fat_ro&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;./htdocs&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Crunch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;crunch&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;./htdocs&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;foreign&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Dispatch.Main&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;console&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kv_ro&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;job&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Yep…black magic. Looks like I’m using &lt;a href=&quot;https://github.com/mirage/ocaml-crunch&quot;&gt;crunch&lt;/a&gt; and not the fat file system because that’s the default. And I don’t see a crunch module in the Ocaml documentation…&lt;/p&gt;
+
+&lt;p&gt;When faced with a murky coding situation I fall back to my tried and true solution…take a guess. I know it is the file system so something that operates on blocks or has ‘-fs’ at the end of it is a likely candidate. &lt;/p&gt;
+
+&lt;p&gt;After some combing through the documentation, I located what looked like the package I wanted: &lt;a href=&quot;http://mirage.github.io/mirage/#Mirage_types.V1:FS.io&quot;&gt;Mirage_types.V1:FS.io&lt;/a&gt;. It has a &lt;code&gt;read&lt;/code&gt; function and a &lt;code&gt;size&lt;/code&gt; function that appears to match what I’m using. Also, it has a &lt;code&gt;stat&lt;/code&gt; function which is what I need. &lt;/p&gt;
+
+&lt;p&gt;Unfortunately, after modifying the code to use the &lt;code&gt;stat&lt;/code&gt; function and removing the recursive part of dispatcher I received a compile time error when rebuilding. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make
+...
+File &lt;span class=&quot;s2&quot;&gt;&amp;quot;dispatch.ml&amp;quot;&lt;/span&gt;, line 41, characters 13-20:
+Error: Unbound value FS.stat
+Command exited with code 2.
+make: *** &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;main.native&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Error 10&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;out-of-the-woods&quot;&gt;Out Of The Woods&lt;/h2&gt;
+
+&lt;p&gt;I’m looking at the wrong module. One of these day’s I’ll need to get merlin working on my workstation. So I took another poke around the documentation. Actually it is using &lt;a href=&quot;http://mirage.github.io/mirage/#Mirage_types.V1:KV_RO&quot;&gt;Mirage_types.V1:KV_RO&lt;/a&gt; which makes more sense based on what the main module is using. &lt;/p&gt;
+
+&lt;p&gt;Even with the right module things aren’t looking so great. There isn’t a &lt;code&gt;stat&lt;/code&gt; function (actually the error told me that, but the documentation confirmed it). &lt;/p&gt;
+
+&lt;p&gt;Eventually, I settled on a solution which catches the missing file error and then tries again by appending &lt;code&gt;index.html&lt;/code&gt; to the end of the path. This seems to work well, though I’m not quite satisfied with using exceptions here. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;c&quot;&gt;(* dispatch non-file URLs *)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;segments&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
+  &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concat&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;segments&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;try_lwt&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;read_fs&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; 
+    &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; 
+    &lt;span class=&quot;nn&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;respond_string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;OK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; 
+      &lt;span class=&quot;n&quot;&gt;try_lwt&lt;/span&gt; 
+        &lt;span class=&quot;n&quot;&gt;read_fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;/index.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 
+        &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; 
+        &lt;span class=&quot;nn&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;respond_string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:`&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;OK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt; 
+      &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;respond_not_found&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;There you have it. Now that &lt;a href=&quot;/about/&quot;&gt;about&lt;/a&gt; works I’ll see about getting this blog up on the cloud. ‘Til next time. &lt;/p&gt;
+</description>
+        <pubDate>Wed, 03 Dec 2014 09:57:47 -0600</pubDate>
+        <link>http://christopherbothwell.com/ocaml/mirage/2014/12/03/about-not-found.html</link>
+        <guid isPermaLink="true">http://christopherbothwell.com/ocaml/mirage/2014/12/03/about-not-found.html</guid>
+        
+        
+        <category>ocaml</category>
+        
+        <category>mirage</category>
+        
+      </item>
+    
+      <item>
+        <title>Hello World</title>
+        <description>&lt;p&gt;Hello. I see you’ve managed to stumble upon my first post here. Honestly, I just wanted to get something out. &lt;a href=&quot;http://github.com/jekyll/jekyll&quot;&gt;Jekyll&lt;/a&gt; seems to be a sufficiently complex tool and, like most times I have my first experience. I suppose I expect most folks that due this sort of thing are domain experts, or at least think they are. Suffice to say, I am not. Mostly I just see some bit of new technology or new idea and seek to gorge myself on the documentation, try a few things out, and then just move on…like a buffet. So in the interest of keeping this a correct introduction here is the proverbial hello world. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ocaml&quot; data-lang=&quot;ocaml&quot;&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print_endline&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;At any rate, one thing I’ve been looking at recently has been &lt;a href=&quot;http://openmirage.org/&quot;&gt;Mirage&lt;/a&gt; and learning about how to setup a unikernel to run on a Xen instance in the cloud. If you see this, than I was probably successful and I’ll do a follow up post with my experience. Otherwise, it probably won’t matter much what I’ve said here anyway. &lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 03 Dec 2014 07:08:07 -0600</pubDate>
+        <link>http://christopherbothwell.com/jekyll/ocaml/hello/2014/12/03/hello-world.html</link>
+        <guid isPermaLink="true">http://christopherbothwell.com/jekyll/ocaml/hello/2014/12/03/hello-world.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>ocaml</category>
+        
+        <category>hello</category>
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1522 @@
+"main.ml" 5 69 77 "main.ml" 5 69 102
+type(
+  bool -> unit
+)
+ident(
+  ext_ref Printexc.record_backtrace
+)
+"main.ml" 5 69 103 "main.ml" 5 69 107
+type(
+  bool
+)
+"main.ml" 5 69 77 "main.ml" 5 69 107
+call(
+  stack
+)
+type(
+  unit
+)
+"main.ml" 9 139 143 "main.ml" 9 139 151
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  def console1 "main.ml" 12 180 180 "main.ml" 1 0 -1
+)
+"main.ml" 9 139 152 "main.ml" 9 139 154
+type(
+  unit
+)
+"main.ml" 10 157 159 "main.ml" 10 157 174
+type(
+  Console.id -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  ext_ref Console.connect
+)
+"main.ml" 10 157 175 "main.ml" 10 157 178
+type(
+  Console.id
+)
+"main.ml" 10 157 159 "main.ml" 10 157 178
+call(
+  tail
+)
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+"main.ml" 9 139 152 "main.ml" 10 157 178
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+"main.ml" 12 180 192 "main.ml" 12 180 214
+call(
+  stack
+)
+"main.ml" 14 216 220 "main.ml" 14 216 222
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  def t3 "main.ml" 16 235 235 "main.ml" 1 0 -1
+)
+"main.ml" 14 216 225 "main.ml" 14 216 233
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  int_ref console1 "main.ml" 9 139 143 "main.ml" 9 139 151
+)
+"main.ml" 16 235 239 "main.ml" 16 235 246
+type(
+  unit -> [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+ident(
+  def static1 "main.ml" 19 274 274 "main.ml" 1 0 -1
+)
+"main.ml" 16 235 247 "main.ml" 16 235 249
+type(
+  unit
+)
+"main.ml" 17 252 254 "main.ml" 17 252 269
+type(
+  Static1.id -> [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+ident(
+  ext_ref Static1.connect
+)
+"main.ml" 17 252 270 "main.ml" 17 252 272
+type(
+  unit
+)
+"main.ml" 17 252 254 "main.ml" 17 252 272
+call(
+  tail
+)
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+"main.ml" 16 235 247 "main.ml" 17 252 272
+type(
+  unit -> [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+"main.ml" 19 274 286 "main.ml" 19 274 317
+call(
+  stack
+)
+"main.ml" 21 319 323 "main.ml" 21 319 325
+type(
+  unit -> [> `Ok of Console.t * Static1.t ] Lwt.t
+)
+ident(
+  def t2 "main.ml" 30 542 542 "main.ml" 1 0 -1
+)
+"main.ml" 21 319 326 "main.ml" 21 319 328
+type(
+  unit
+)
+"main.ml" 22 331 333 "main.ml" 22 331 341
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  int_ref console1 "main.ml" 9 139 143 "main.ml" 9 139 151
+)
+"main.ml" 22 331 342 "main.ml" 22 331 344
+type(
+  unit
+)
+"main.ml" 22 331 333 "main.ml" 22 331 344
+call(
+  stack
+)
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+"main.ml" 22 331 345 "main.ml" 22 331 348
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Lwt.t ->
+  ([ `Error of Console.error | `Ok of Console.t ] ->
+   ([> `Ok of Console.t * Static1.t ] as 'a) Lwt.t) ->
+  'a Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 23 358 369 "main.ml" 23 358 370
+type(
+  Console.error
+)
+ident(
+  def e "main.ml" 23 358 374 "main.ml" 23 358 399
+)
+"main.ml" 23 358 362 "main.ml" 23 358 370
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 23 358 374 "main.ml" 23 358 378
+type(
+  exn -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 23 358 388 "main.ml" 23 358 398
+type(
+  string
+)
+"main.ml" 23 358 380 "main.ml" 23 358 398
+type(
+  exn
+)
+"main.ml" 23 358 374 "main.ml" 23 358 399
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 24 400 408 "main.ml" 24 400 416
+type(
+  Console.t
+)
+ident(
+  def console1 "main.ml" 25 420 422 "main.ml" 28 506 540
+)
+"main.ml" 24 400 404 "main.ml" 24 400 416
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 25 420 422 "main.ml" 25 420 429
+type(
+  unit -> [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+ident(
+  int_ref static1 "main.ml" 16 235 239 "main.ml" 16 235 246
+)
+"main.ml" 25 420 430 "main.ml" 25 420 432
+type(
+  unit
+)
+"main.ml" 25 420 422 "main.ml" 25 420 432
+call(
+  stack
+)
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+"main.ml" 25 420 433 "main.ml" 25 420 436
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] Lwt.t ->
+  ([ `Error of Static1.error | `Ok of Static1.t ] -> 'a Lwt.t) -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 26 446 457 "main.ml" 26 446 458
+type(
+  Static1.error
+)
+ident(
+  def e "main.ml" 26 446 462 "main.ml" 26 446 486
+)
+"main.ml" 26 446 450 "main.ml" 26 446 458
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ]
+)
+"main.ml" 26 446 462 "main.ml" 26 446 466
+type(
+  exn -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 26 446 476 "main.ml" 26 446 485
+type(
+  string
+)
+"main.ml" 26 446 468 "main.ml" 26 446 485
+type(
+  exn
+)
+"main.ml" 26 446 462 "main.ml" 26 446 486
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 27 487 495 "main.ml" 27 487 502
+type(
+  Static1.t
+)
+ident(
+  def static1 "main.ml" 28 506 508 "main.ml" 28 506 540
+)
+"main.ml" 27 487 491 "main.ml" 27 487 502
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ]
+)
+"main.ml" 28 506 508 "main.ml" 28 506 514
+type(
+  'a -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"main.ml" 28 506 521 "main.ml" 28 506 529
+type(
+  Console.t
+)
+ident(
+  int_ref console1 "main.ml" 24 400 408 "main.ml" 24 400 416
+)
+"main.ml" 28 506 531 "main.ml" 28 506 538
+type(
+  Static1.t
+)
+ident(
+  int_ref static1 "main.ml" 27 487 495 "main.ml" 27 487 502
+)
+"main.ml" 28 506 516 "main.ml" 28 506 539
+type(
+  'a
+)
+type(
+  Console.t * Static1.t
+)
+"main.ml" 28 506 508 "main.ml" 28 506 540
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 25 420 437 "main.ml" 28 506 540
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] -> 'a Lwt.t
+)
+"main.ml" 25 420 422 "main.ml" 28 506 540
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 22 331 349 "main.ml" 28 506 540
+type(
+  [ `Error of Console.error | `Ok of Console.t ] -> 'a Lwt.t
+)
+"main.ml" 22 331 333 "main.ml" 28 506 540
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 21 319 326 "main.ml" 28 506 540
+type(
+  unit -> 'a Lwt.t
+)
+"main.ml" 30 542 546 "main.ml" 30 542 551
+type(
+  unit -> [> `Ok of unit ] Lwt.t
+)
+ident(
+  def clock "main.ml" 32 574 574 "main.ml" 1 0 -1
+)
+"main.ml" 30 542 552 "main.ml" 30 542 554
+type(
+  unit
+)
+"main.ml" 30 542 557 "main.ml" 30 542 563
+type(
+  ([> `Ok of unit ] as 'a) -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"main.ml" 30 542 569 "main.ml" 30 542 571
+type(
+  unit
+)
+"main.ml" 30 542 565 "main.ml" 30 542 571
+type(
+  'a
+)
+"main.ml" 30 542 557 "main.ml" 30 542 572
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 30 542 552 "main.ml" 30 542 572
+type(
+  unit -> 'a Lwt.t
+)
+"main.ml" 32 574 578 "main.ml" 32 574 586
+type(
+  unit -> [ `Error of Netif.error | `Ok of Netif.t ] Netif.io
+)
+ident(
+  def net_tap0 "main.ml" 35 616 616 "main.ml" 1 0 -1
+)
+"main.ml" 32 574 587 "main.ml" 32 574 589
+type(
+  unit
+)
+"main.ml" 33 592 594 "main.ml" 33 592 607
+type(
+  Netif.id -> [ `Error of Netif.error | `Ok of Netif.t ] Netif.io
+)
+ident(
+  ext_ref Netif.connect
+)
+"main.ml" 33 592 608 "main.ml" 33 592 614
+type(
+  Netif.id
+)
+"main.ml" 33 592 594 "main.ml" 33 592 614
+call(
+  tail
+)
+type(
+  [ `Error of Netif.error | `Ok of Netif.t ] Netif.io
+)
+"main.ml" 32 574 587 "main.ml" 33 592 614
+type(
+  unit -> [ `Error of Netif.error | `Ok of Netif.t ] Netif.io
+)
+"main.ml" 35 616 620 "main.ml" 35 616 626
+type(
+  unit -> [> `Ok of unit ] Lwt.t
+)
+ident(
+  def random "main.ml" 37 649 649 "main.ml" 1 0 -1
+)
+"main.ml" 35 616 627 "main.ml" 35 616 629
+type(
+  unit
+)
+"main.ml" 35 616 632 "main.ml" 35 616 638
+type(
+  ([> `Ok of unit ] as 'a) -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"main.ml" 35 616 644 "main.ml" 35 616 646
+type(
+  unit
+)
+"main.ml" 35 616 640 "main.ml" 35 616 646
+type(
+  'a
+)
+"main.ml" 35 616 632 "main.ml" 35 616 647
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 35 616 627 "main.ml" 35 616 647
+type(
+  unit -> 'a Lwt.t
+)
+"main.ml" 38 674 687 "main.ml" 38 674 704
+call(
+  stack
+)
+"main.ml" 39 705 718 "main.ml" 39 705 730
+call(
+  stack
+)
+"main.ml" 40 731 744 "main.ml" 40 731 757
+call(
+  stack
+)
+"main.ml" 41 758 771 "main.ml" 41 758 813
+call(
+  stack
+)
+"main.ml" 42 814 827 "main.ml" 42 814 895
+call(
+  stack
+)
+"main.ml" 46 913 917 "main.ml" 46 913 925
+type(
+  unit -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  def stackv41 "main.ml" 60 1240 1240 "main.ml" 1 0 -1
+)
+"main.ml" 46 913 926 "main.ml" 46 913 928
+type(
+  unit
+)
+"main.ml" 47 931 933 "main.ml" 47 931 941
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  int_ref console1 "main.ml" 9 139 143 "main.ml" 9 139 151
+)
+"main.ml" 47 931 942 "main.ml" 47 931 944
+type(
+  unit
+)
+"main.ml" 47 931 933 "main.ml" 47 931 944
+call(
+  stack
+)
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+"main.ml" 47 931 945 "main.ml" 47 931 948
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Lwt.t ->
+  ([ `Error of Console.error | `Ok of Console.t ] ->
+   [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t) ->
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 48 958 969 "main.ml" 48 958 970
+type(
+  Console.error
+)
+"main.ml" 48 958 962 "main.ml" 48 958 970
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 48 958 977 "main.ml" 48 958 981
+type(
+  exn -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 48 958 991 "main.ml" 48 958 1001
+type(
+  string
+)
+"main.ml" 48 958 983 "main.ml" 48 958 1001
+type(
+  exn
+)
+"main.ml" 48 958 977 "main.ml" 48 958 1002
+call(
+  tail
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 49 1003 1011 "main.ml" 49 1003 1018
+type(
+  Console.t
+)
+ident(
+  def console "main.ml" 50 1022 1024 "main.ml" 58 1213 1238
+)
+"main.ml" 49 1003 1007 "main.ml" 49 1003 1018
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 50 1022 1024 "main.ml" 50 1022 1032
+type(
+  unit -> [ `Error of Netif.error | `Ok of Netif.t ] Netif.io
+)
+ident(
+  int_ref net_tap0 "main.ml" 32 574 578 "main.ml" 32 574 586
+)
+"main.ml" 50 1022 1033 "main.ml" 50 1022 1035
+type(
+  unit
+)
+"main.ml" 50 1022 1024 "main.ml" 50 1022 1035
+call(
+  stack
+)
+type(
+  [ `Error of Netif.error | `Ok of Stackv41.netif ] Netif.io
+)
+"main.ml" 50 1022 1036 "main.ml" 50 1022 1039
+type(
+  [ `Error of Netif.error | `Ok of Stackv41.netif ] Lwt.t ->
+  ([ `Error of Netif.error | `Ok of Stackv41.netif ] ->
+   [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t) ->
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 51 1049 1060 "main.ml" 51 1049 1061
+type(
+  Netif.error
+)
+"main.ml" 51 1049 1053 "main.ml" 51 1049 1061
+type(
+  [ `Error of Netif.error | `Ok of Stackv41.netif ]
+)
+"main.ml" 51 1049 1070 "main.ml" 51 1049 1074
+type(
+  exn -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 51 1049 1084 "main.ml" 51 1049 1094
+type(
+  string
+)
+"main.ml" 51 1049 1076 "main.ml" 51 1049 1094
+type(
+  exn
+)
+"main.ml" 51 1049 1070 "main.ml" 51 1049 1095
+call(
+  tail
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 52 1096 1104 "main.ml" 52 1096 1113
+type(
+  Stackv41.netif
+)
+ident(
+  def interface "main.ml" 53 1117 1119 "main.ml" 58 1213 1238
+)
+"main.ml" 52 1096 1100 "main.ml" 52 1096 1113
+type(
+  [ `Error of Netif.error | `Ok of Stackv41.netif ]
+)
+"main.ml" 53 1117 1123 "main.ml" 53 1117 1129
+type(
+  (Console.t, Stackv41.netif, [> `DHCP ]) V1_LWT.stackv4_config
+)
+ident(
+  def config "main.ml" 58 1213 1215 "main.ml" 58 1213 1238
+)
+"main.ml" 54 1134 1152 "main.ml" 54 1134 1162
+type(
+  string
+)
+"main.ml" 55 1164 1168 "main.ml" 55 1164 1175
+type(
+  Console.t
+)
+ident(
+  int_ref console "main.ml" 49 1003 1011 "main.ml" 49 1003 1018
+)
+"main.ml" 55 1164 1177 "main.ml" 55 1164 1186
+type(
+  Stackv41.netif
+)
+ident(
+  int_ref interface "main.ml" 52 1096 1104 "main.ml" 52 1096 1113
+)
+"main.ml" 56 1188 1199 "main.ml" 56 1188 1204
+type(
+  [> `DHCP ] as 'a
+)
+"main.ml" 53 1117 1132 "main.ml" 57 1206 1209
+type(
+  (Console.t, Stackv41.netif, 'a) V1_LWT.stackv4_config
+)
+"main.ml" 58 1213 1215 "main.ml" 58 1213 1231
+type(
+  Stackv41.id -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Stackv41.io
+)
+ident(
+  ext_ref Stackv41.connect
+)
+"main.ml" 58 1213 1232 "main.ml" 58 1213 1238
+type(
+  (Stackv41.console, Stackv41.netif, Stackv41.mode) V1_LWT.stackv4_config
+)
+ident(
+  int_ref config "main.ml" 53 1117 1123 "main.ml" 53 1117 1129
+)
+"main.ml" 58 1213 1215 "main.ml" 58 1213 1238
+call(
+  tail
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Stackv41.io
+)
+"main.ml" 53 1117 1119 "main.ml" 58 1213 1238
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Stackv41.io
+)
+"main.ml" 50 1022 1040 "main.ml" 58 1213 1238
+type(
+  [ `Error of Netif.error | `Ok of Stackv41.netif ] ->
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 50 1022 1024 "main.ml" 58 1213 1238
+call(
+  tail
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 47 931 949 "main.ml" 58 1213 1238
+type(
+  [ `Error of Console.error | `Ok of Console.t ] ->
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 47 931 933 "main.ml" 58 1213 1238
+call(
+  tail
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 46 913 926 "main.ml" 58 1213 1238
+type(
+  unit -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 62 1275 1279 "main.ml" 62 1275 1285
+type(
+  Vchan1.t Lwt.t
+)
+ident(
+  def vchan1 "main.ml" 64 1317 1317 "main.ml" 1 0 -1
+)
+"main.ml" 62 1275 1288 "main.ml" 62 1275 1303
+type(
+  Vchan1.uuid -> Vchan1.t Lwt.t
+)
+ident(
+  ext_ref Vchan1.register
+)
+"main.ml" 62 1275 1304 "main.ml" 62 1275 1315
+type(
+  Vchan1.uuid
+)
+"main.ml" 62 1275 1288 "main.ml" 62 1275 1315
+call(
+  stack
+)
+type(
+  Vchan1.t Lwt.t
+)
+"main.ml" 64 1317 1335 "main.ml" 64 1317 1372
+call(
+  stack
+)
+"main.ml" 66 1374 1378 "main.ml" 66 1374 1386
+type(
+  unit -> [> `Ok of Conduit1.ctx ] Lwt.t
+)
+ident(
+  def conduit1 "main.ml" 74 1602 1602 "main.ml" 1 0 -1
+)
+"main.ml" 66 1374 1387 "main.ml" 66 1374 1389
+type(
+  unit
+)
+"main.ml" 67 1392 1394 "main.ml" 67 1392 1402
+type(
+  unit -> [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+ident(
+  int_ref stackv41 "main.ml" 46 913 917 "main.ml" 46 913 925
+)
+"main.ml" 67 1392 1403 "main.ml" 67 1392 1405
+type(
+  unit
+)
+"main.ml" 67 1392 1394 "main.ml" 67 1392 1405
+call(
+  stack
+)
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t
+)
+"main.ml" 67 1392 1406 "main.ml" 67 1392 1409
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] Lwt.t ->
+  ([ `Error of Stackv41.error | `Ok of Stackv41.t ] ->
+   ([> `Ok of Conduit1.ctx ] as 'a) Lwt.t) ->
+  'a Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 68 1419 1430 "main.ml" 68 1419 1431
+type(
+  Stackv41.error
+)
+"main.ml" 68 1419 1423 "main.ml" 68 1419 1431
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ]
+)
+"main.ml" 68 1419 1436 "main.ml" 68 1419 1440
+type(
+  exn -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 68 1419 1450 "main.ml" 68 1419 1460
+type(
+  string
+)
+"main.ml" 68 1419 1442 "main.ml" 68 1419 1460
+type(
+  exn
+)
+"main.ml" 68 1419 1436 "main.ml" 68 1419 1461
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 69 1462 1470 "main.ml" 69 1462 1478
+type(
+  Stackv41.t
+)
+ident(
+  def stackv41 "main.ml" 70 1482 1484 "main.ml" 72 1577 1600
+)
+"main.ml" 69 1462 1466 "main.ml" 69 1462 1478
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ]
+)
+"main.ml" 70 1482 1484 "main.ml" 70 1482 1490
+type(
+  Vchan1.t Lwt.t
+)
+ident(
+  int_ref vchan1 "main.ml" 62 1275 1279 "main.ml" 62 1275 1285
+)
+"main.ml" 70 1482 1491 "main.ml" 70 1482 1494
+type(
+  Vchan1.t Lwt.t -> (Vchan1.t -> 'a Lwt.t) -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 70 1482 1499 "main.ml" 70 1482 1505
+type(
+  Vchan1.t
+)
+ident(
+  def vchan1 "main.ml" 71 1509 1511 "main.ml" 72 1577 1600
+)
+"main.ml" 71 1509 1511 "main.ml" 71 1509 1524
+type(
+  ?peer:Conduit1.peer ->
+  ?stack:Conduit1.stack -> unit -> Conduit1.ctx Conduit1.io
+)
+ident(
+  ext_ref Conduit1.init
+)
+"main.ml" 71 1509 1531 "main.ml" 71 1509 1537
+type(
+  Vchan1.t
+)
+ident(
+  int_ref vchan1 "main.ml" 70 1482 1499 "main.ml" 70 1482 1505
+)
+"main.ml" 71 1509 1545 "main.ml" 71 1509 1553
+type(
+  Stackv41.t
+)
+ident(
+  int_ref stackv41 "main.ml" 69 1462 1470 "main.ml" 69 1462 1478
+)
+"main.ml" 71 1509 1554 "main.ml" 71 1509 1556
+type(
+  unit
+)
+"main.ml" 71 1509 1511 "main.ml" 71 1509 1556
+call(
+  stack
+)
+type(
+  Conduit1.ctx Conduit1.io
+)
+"main.ml" 71 1509 1557 "main.ml" 71 1509 1560
+type(
+  Conduit1.ctx Lwt.t -> (Conduit1.ctx -> 'a Lwt.t) -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 71 1509 1565 "main.ml" 71 1509 1573
+type(
+  Conduit1.ctx
+)
+ident(
+  def conduit1 "main.ml" 72 1577 1579 "main.ml" 72 1577 1600
+)
+"main.ml" 72 1577 1579 "main.ml" 72 1577 1585
+type(
+  'a -> 'a Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"main.ml" 72 1577 1591 "main.ml" 72 1577 1599
+type(
+  Conduit1.ctx
+)
+ident(
+  int_ref conduit1 "main.ml" 71 1509 1565 "main.ml" 71 1509 1573
+)
+"main.ml" 72 1577 1587 "main.ml" 72 1577 1599
+type(
+  'a
+)
+"main.ml" 72 1577 1579 "main.ml" 72 1577 1600
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 71 1509 1565 "main.ml" 72 1577 1600
+type(
+  Conduit1.ctx -> 'a Lwt.t
+)
+"main.ml" 71 1509 1511 "main.ml" 72 1577 1600
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 70 1482 1499 "main.ml" 72 1577 1600
+type(
+  Vchan1.t -> 'a Lwt.t
+)
+"main.ml" 70 1482 1484 "main.ml" 72 1577 1600
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 67 1392 1410 "main.ml" 72 1577 1600
+type(
+  [ `Error of Stackv41.error | `Ok of Stackv41.t ] -> 'a Lwt.t
+)
+"main.ml" 67 1392 1394 "main.ml" 72 1577 1600
+call(
+  tail
+)
+type(
+  'a Lwt.t
+)
+"main.ml" 66 1374 1387 "main.ml" 72 1577 1600
+type(
+  unit -> 'a Lwt.t
+)
+"main.ml" 74 1602 1617 "main.ml" 74 1602 1636
+call(
+  stack
+)
+"main.ml" 76 1638 1642 "main.ml" 76 1638 1647
+type(
+  unit -> [> `Ok of Http1.Server_core.t -> unit Conduit1.io ] Lwt.t
+)
+ident(
+  def http1 "main.ml" 87 1908 1908 "main.ml" 1 0 -1
+)
+"main.ml" 76 1638 1648 "main.ml" 76 1638 1650
+type(
+  unit
+)
+"main.ml" 77 1653 1655 "main.ml" 77 1653 1663
+type(
+  unit -> _[< `Error of '_a | `Ok of Conduit1.ctx > `Ok ] Lwt.t
+)
+ident(
+  int_ref conduit1 "main.ml" 66 1374 1378 "main.ml" 66 1374 1386
+)
+"main.ml" 77 1653 1664 "main.ml" 77 1653 1666
+type(
+  unit
+)
+"main.ml" 77 1653 1655 "main.ml" 77 1653 1666
+call(
+  stack
+)
+type(
+  (_[< `Error of '_a | `Ok of Conduit1.ctx > `Ok ] as 'b) Lwt.t
+)
+"main.ml" 77 1653 1667 "main.ml" 77 1653 1670
+type(
+  'b Lwt.t ->
+  ('b -> ([> `Ok of Http1.Server_core.t -> unit Conduit1.io ] as 'c) Lwt.t) ->
+  'c Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 78 1680 1691 "main.ml" 78 1680 1692
+type(
+  '_a
+)
+"main.ml" 78 1680 1684 "main.ml" 78 1680 1692
+type(
+  'b
+)
+"main.ml" 78 1680 1697 "main.ml" 78 1680 1701
+type(
+  exn -> 'c Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 78 1680 1711 "main.ml" 78 1680 1721
+type(
+  string
+)
+"main.ml" 78 1680 1703 "main.ml" 78 1680 1721
+type(
+  exn
+)
+"main.ml" 78 1680 1697 "main.ml" 78 1680 1722
+call(
+  tail
+)
+type(
+  'c Lwt.t
+)
+"main.ml" 79 1723 1731 "main.ml" 79 1723 1739
+type(
+  Conduit1.ctx
+)
+ident(
+  def conduit1 "main.ml" 80 1743 1745 "main.ml" 85 1885 1906
+)
+"main.ml" 79 1723 1727 "main.ml" 79 1723 1739
+type(
+  'b
+)
+"main.ml" 80 1743 1749 "main.ml" 80 1743 1755
+type(
+  Http1.Server_core.t -> unit Conduit1.io
+)
+ident(
+  def listen "main.ml" 85 1885 1887 "main.ml" 85 1885 1906
+)
+"main.ml" 80 1743 1756 "main.ml" 80 1743 1760
+type(
+  Http1.Server_core.t
+)
+ident(
+  def spec "main.ml" 81 1763 1767 "main.ml" 83 1823 1879
+)
+"main.ml" 81 1763 1771 "main.ml" 81 1763 1774
+type(
+  Conduit1.ctx
+)
+ident(
+  def ctx "main.ml" 82 1789 1793 "main.ml" 83 1823 1879
+)
+"main.ml" 81 1763 1777 "main.ml" 81 1763 1785
+type(
+  Conduit1.ctx
+)
+ident(
+  int_ref conduit1 "main.ml" 79 1723 1731 "main.ml" 79 1723 1739
+)
+"main.ml" 82 1789 1797 "main.ml" 82 1789 1801
+type(
+  [> `TCP of [> `Port of int ] ]
+)
+ident(
+  def mode "main.ml" 83 1823 1827 "main.ml" 83 1823 1879
+)
+"main.ml" 82 1789 1816 "main.ml" 82 1789 1818
+type(
+  int
+)
+"main.ml" 82 1789 1810 "main.ml" 82 1789 1818
+type(
+  [> `Port of int ] as 'd
+)
+"main.ml" 82 1789 1804 "main.ml" 82 1789 1819
+type(
+  [> `TCP of 'd ] as 'e
+)
+"main.ml" 83 1823 1827 "main.ml" 83 1823 1841
+type(
+  ?timeout:int ->
+  ?stop:unit Conduit1.io ->
+  ctx:Conduit1.ctx ->
+  mode:Conduit_mirage.server ->
+  (Conduit1.flow -> Conduit1.ic -> Conduit1.oc -> unit Conduit1.io) ->
+  unit Conduit1.io
+)
+ident(
+  ext_ref Conduit1.serve
+)
+"main.ml" 83 1823 1842 "main.ml" 83 1823 1846
+type(
+  Conduit1.ctx
+)
+ident(
+  int_ref ctx "main.ml" 81 1763 1771 "main.ml" 81 1763 1774
+)
+"main.ml" 83 1823 1847 "main.ml" 83 1823 1852
+type(
+  Conduit_mirage.server
+)
+ident(
+  int_ref mode "main.ml" 82 1789 1797 "main.ml" 82 1789 1801
+)
+"main.ml" 83 1823 1854 "main.ml" 83 1823 1873
+type(
+  Http1.Server_core.t ->
+  Http1.Channel.flow -> Conduit1.ic -> Conduit1.oc -> unit Lwt.t
+)
+ident(
+  ext_ref Http1.Server.listen
+)
+"main.ml" 83 1823 1874 "main.ml" 83 1823 1878
+type(
+  Http1.Server_core.t
+)
+ident(
+  int_ref spec "main.ml" 80 1743 1756 "main.ml" 80 1743 1760
+)
+"main.ml" 83 1823 1854 "main.ml" 83 1823 1878
+call(
+  stack
+)
+type(
+  Http1.Channel.flow -> Conduit1.ic -> Conduit1.oc -> unit Lwt.t
+)
+"main.ml" 83 1823 1827 "main.ml" 83 1823 1879
+call(
+  tail
+)
+type(
+  unit Conduit1.io
+)
+"main.ml" 82 1789 1793 "main.ml" 83 1823 1879
+type(
+  unit Conduit1.io
+)
+"main.ml" 81 1763 1767 "main.ml" 83 1823 1879
+type(
+  unit Conduit1.io
+)
+"main.ml" 80 1743 1756 "main.ml" 83 1823 1879
+type(
+  Http1.Server_core.t -> unit Conduit1.io
+)
+"main.ml" 85 1885 1887 "main.ml" 85 1885 1893
+type(
+  'c -> 'c Lwt.t
+)
+ident(
+  ext_ref Lwt.return
+)
+"main.ml" 85 1885 1899 "main.ml" 85 1885 1905
+type(
+  Http1.Server_core.t -> unit Conduit1.io
+)
+ident(
+  int_ref listen "main.ml" 80 1743 1749 "main.ml" 80 1743 1755
+)
+"main.ml" 85 1885 1895 "main.ml" 85 1885 1905
+type(
+  'c
+)
+"main.ml" 85 1885 1887 "main.ml" 85 1885 1906
+call(
+  tail
+)
+type(
+  'c Lwt.t
+)
+"main.ml" 80 1743 1745 "main.ml" 85 1885 1906
+type(
+  'c Lwt.t
+)
+"main.ml" 77 1653 1671 "main.ml" 85 1885 1906
+type(
+  'b -> 'c Lwt.t
+)
+"main.ml" 77 1653 1655 "main.ml" 85 1885 1906
+call(
+  tail
+)
+type(
+  'c Lwt.t
+)
+"main.ml" 76 1638 1648 "main.ml" 85 1885 1906
+type(
+  unit -> 'c Lwt.t
+)
+"main.ml" 87 1908 1920 "main.ml" 87 1908 1965
+call(
+  stack
+)
+"main.ml" 89 1967 1971 "main.ml" 89 1967 1973
+type(
+  unit -> unit Lwt.t
+)
+ident(
+  def t1 "main.ml" 101 2269 2269 "main.ml" 1 0 -1
+)
+"main.ml" 89 1967 1974 "main.ml" 89 1967 1976
+type(
+  unit
+)
+"main.ml" 90 1979 1981 "main.ml" 90 1979 1989
+type(
+  unit -> [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+ident(
+  int_ref console1 "main.ml" 9 139 143 "main.ml" 9 139 151
+)
+"main.ml" 90 1979 1990 "main.ml" 90 1979 1992
+type(
+  unit
+)
+"main.ml" 90 1979 1981 "main.ml" 90 1979 1992
+call(
+  stack
+)
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Console.io
+)
+"main.ml" 90 1979 1993 "main.ml" 90 1979 1996
+type(
+  [ `Error of Console.error | `Ok of Console.t ] Lwt.t ->
+  ([ `Error of Console.error | `Ok of Console.t ] -> unit Lwt.t) ->
+  unit Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 91 2006 2017 "main.ml" 91 2006 2018
+type(
+  Console.error
+)
+ident(
+  def e "main.ml" 91 2006 2022 "main.ml" 91 2006 2047
+)
+"main.ml" 91 2006 2010 "main.ml" 91 2006 2018
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 91 2006 2022 "main.ml" 91 2006 2026
+type(
+  exn -> unit Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 91 2006 2036 "main.ml" 91 2006 2046
+type(
+  string
+)
+"main.ml" 91 2006 2028 "main.ml" 91 2006 2046
+type(
+  exn
+)
+"main.ml" 91 2006 2022 "main.ml" 91 2006 2047
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 92 2048 2056 "main.ml" 92 2048 2064
+type(
+  Console.t
+)
+ident(
+  def console1 "main.ml" 93 2068 2070 "main.ml" 99 2234 2267
+)
+"main.ml" 92 2048 2052 "main.ml" 92 2048 2064
+type(
+  [ `Error of Console.error | `Ok of Console.t ]
+)
+"main.ml" 93 2068 2070 "main.ml" 93 2068 2075
+type(
+  unit ->
+  _[< `Error of '_a | `Ok of Http1.Server_core.t -> unit Conduit1.io > `Ok ]
+  Lwt.t
+)
+ident(
+  int_ref http1 "main.ml" 76 1638 1642 "main.ml" 76 1638 1647
+)
+"main.ml" 93 2068 2076 "main.ml" 93 2068 2078
+type(
+  unit
+)
+"main.ml" 93 2068 2070 "main.ml" 93 2068 2078
+call(
+  stack
+)
+type(
+  (_[< `Error of '_a | `Ok of Http1.Server.t -> unit Conduit1.io > `Ok ]
+   as 'b)
+  Lwt.t
+)
+"main.ml" 93 2068 2079 "main.ml" 93 2068 2082
+type(
+  'b Lwt.t -> ('b -> unit Lwt.t) -> unit Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 94 2092 2103 "main.ml" 94 2092 2104
+type(
+  '_a
+)
+ident(
+  def e "main.ml" 94 2092 2108 "main.ml" 94 2092 2130
+)
+"main.ml" 94 2092 2096 "main.ml" 94 2092 2104
+type(
+  'b
+)
+"main.ml" 94 2092 2108 "main.ml" 94 2092 2112
+type(
+  exn -> unit Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 94 2092 2122 "main.ml" 94 2092 2129
+type(
+  string
+)
+"main.ml" 94 2092 2114 "main.ml" 94 2092 2129
+type(
+  exn
+)
+"main.ml" 94 2092 2108 "main.ml" 94 2092 2130
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 95 2131 2139 "main.ml" 95 2131 2144
+type(
+  Http1.Server.t -> unit Conduit1.io
+)
+ident(
+  def http1 "main.ml" 96 2148 2150 "main.ml" 99 2234 2267
+)
+"main.ml" 95 2131 2135 "main.ml" 95 2131 2144
+type(
+  'b
+)
+"main.ml" 96 2148 2150 "main.ml" 96 2148 2157
+type(
+  unit -> [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+ident(
+  int_ref static1 "main.ml" 16 235 239 "main.ml" 16 235 246
+)
+"main.ml" 96 2148 2158 "main.ml" 96 2148 2160
+type(
+  unit
+)
+"main.ml" 96 2148 2150 "main.ml" 96 2148 2160
+call(
+  stack
+)
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] Static1.io
+)
+"main.ml" 96 2148 2161 "main.ml" 96 2148 2164
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] Lwt.t ->
+  ([ `Error of Static1.error | `Ok of Static1.t ] -> unit Lwt.t) ->
+  unit Lwt.t
+)
+ident(
+  ext_ref Lwt.( >>= )
+)
+"main.ml" 97 2174 2185 "main.ml" 97 2174 2186
+type(
+  Static1.error
+)
+ident(
+  def e "main.ml" 97 2174 2190 "main.ml" 97 2174 2214
+)
+"main.ml" 97 2174 2178 "main.ml" 97 2174 2186
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ]
+)
+"main.ml" 97 2174 2190 "main.ml" 97 2174 2194
+type(
+  exn -> unit Lwt.t
+)
+ident(
+  ext_ref Lwt.fail
+)
+"main.ml" 97 2174 2204 "main.ml" 97 2174 2213
+type(
+  string
+)
+"main.ml" 97 2174 2196 "main.ml" 97 2174 2213
+type(
+  exn
+)
+"main.ml" 97 2174 2190 "main.ml" 97 2174 2214
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 98 2215 2223 "main.ml" 98 2215 2230
+type(
+  Static1.t
+)
+ident(
+  def static1 "main.ml" 99 2234 2236 "main.ml" 99 2234 2267
+)
+"main.ml" 98 2215 2219 "main.ml" 98 2215 2230
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ]
+)
+"main.ml" 99 2234 2236 "main.ml" 99 2234 2244
+type(
+  Console.t ->
+  Static1.t -> (Http1.Server.t -> unit Conduit1.io) -> unit Conduit1.io
+)
+ident(
+  ext_ref M1.start
+)
+"main.ml" 99 2234 2245 "main.ml" 99 2234 2253
+type(
+  Console.t
+)
+ident(
+  int_ref console1 "main.ml" 92 2048 2056 "main.ml" 92 2048 2064
+)
+"main.ml" 99 2234 2254 "main.ml" 99 2234 2261
+type(
+  Static1.t
+)
+ident(
+  int_ref static1 "main.ml" 98 2215 2223 "main.ml" 98 2215 2230
+)
+"main.ml" 99 2234 2262 "main.ml" 99 2234 2267
+type(
+  Http1.Server.t -> unit Conduit1.io
+)
+ident(
+  int_ref http1 "main.ml" 95 2131 2139 "main.ml" 95 2131 2144
+)
+"main.ml" 99 2234 2236 "main.ml" 99 2234 2267
+call(
+  tail
+)
+type(
+  unit Conduit1.io
+)
+"main.ml" 96 2148 2165 "main.ml" 99 2234 2267
+type(
+  [ `Error of Static1.error | `Ok of Static1.t ] -> unit Lwt.t
+)
+"main.ml" 96 2148 2150 "main.ml" 99 2234 2267
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 93 2068 2083 "main.ml" 99 2234 2267
+type(
+  'b -> unit Lwt.t
+)
+"main.ml" 93 2068 2070 "main.ml" 99 2234 2267
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 90 1979 1997 "main.ml" 99 2234 2267
+type(
+  [ `Error of Console.error | `Ok of Console.t ] -> unit Lwt.t
+)
+"main.ml" 90 1979 1981 "main.ml" 99 2234 2267
+call(
+  tail
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 89 1967 1974 "main.ml" 99 2234 2267
+type(
+  unit -> unit Lwt.t
+)
+"main.ml" 101 2269 2273 "main.ml" 101 2269 2275
+type(
+  unit
+)
+"main.ml" 102 2278 2280 "main.ml" 102 2278 2291
+type(
+  unit Lwt.t -> unit
+)
+ident(
+  ext_ref OS.Main.run
+)
+"main.ml" 102 2278 2293 "main.ml" 102 2278 2297
+type(
+  unit Lwt.t list -> unit Lwt.t
+)
+ident(
+  ext_ref Lwt.join
+)
+"main.ml" 102 2278 2299 "main.ml" 102 2278 2301
+type(
+  unit -> unit Lwt.t
+)
+ident(
+  int_ref t1 "main.ml" 89 1967 1971 "main.ml" 89 1967 1973
+)
+"main.ml" 102 2278 2302 "main.ml" 102 2278 2304
+type(
+  unit
+)
+"main.ml" 102 2278 2299 "main.ml" 102 2278 2304
+call(
+  stack
+)
+type(
+  unit Lwt.t
+)
+type(
+  unit Lwt.t list
+)
+"main.ml" 102 2278 2298 "main.ml" 102 2278 2305
+type(
+  unit Lwt.t list
+)
+"main.ml" 102 2278 2293 "main.ml" 102 2278 2305
+call(
+  stack
+)
+type(
+  unit Lwt.t
+)
+"main.ml" 102 2278 2280 "main.ml" 102 2278 2306
+call(
+  stack
+)
+type(
+  unit
+)

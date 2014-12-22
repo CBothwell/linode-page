@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>About Not Found</title>
+  <meta name="description" content="After getting the blog set up initially running in Jekyll things seemed to be moving along smoothly to pushing this thing up to one of the various cloud plat...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://christopherbothwell.com/ocaml/mirage/2014/12/03/about-not-found.html">
+  <link rel="alternate" type="application/atom+xml" title="A Set Of Certain Musings" href="http://christopherbothwell.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">A Set Of Certain Musings</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">About Not Found</h1>
+    <p class="post-meta">Dec 3, 2014</p>
+  </header>
+
+  <article class="post-content">
+    <p>After getting the blog set up initially running in Jekyll things seemed to be moving along smoothly to pushing this thing up to one of the various cloud platforms which might support running a mirage unikernel. The next testing phase was to get this set up to run locally inside the Unix option on my workstation. </p>
+
+<h2 id="a-simple-mirage-project">A Simple Mirage Project</h2>
+
+<p>The mirage project suggests starting with the <a href="https://github.com/mirage/mirage-skeleton">mirage-skeleton</a> project to build some example unikernels. Basic work in getting the examples built can be found on the <a href="http://www.openmirage.org/wiki/hello-world">mirage website</a>. Mirage leverages the powerful Ocaml module system, specifically <a href="https://realworldocaml.org/v1/en/html/functors.html">functors</a> to abstract away the fact that you can use different backends. During the build phase environment variables and options can be passed to the <code>mirage</code> tool to set up specific backends… at least… I believe that’s how it works. </p>
+
+<p>Ocaml is sufficiently different than the curly brace languages I’m used to and Mirage still seems a bit like black magic right now, so my confidence about that being the case is appropriately limited. Kindly, however, there is a static_website folder from the mirage-skeleton project that contains a basic unikernel for serving html pages from the htdocs folder that can take a complied Jekyll site (really any static site) and serve it. </p>
+
+<p>After moving some files around and getting the basic project to build without my Jekyll site, it was time to try to get the static blog in that htdocs folder. Jekyll lets you configure a build directory from the _config.yml file, so I opted to let Jekyll do the work for me. I dumped my blog folder inside of a copy of the static_webstie folder and added a <code>destination: ../htdocs/</code> to the _config.yml file and ran the <code>jekyll build</code> command. </p>
+
+<p>Next I configured the project to build with the Unix option. </p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>static_website
+<span class="nv">$ </span>mirage configure --unix
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo ./mir-www</code></pre></div>
+
+<p>Things built without issue and I was ready to test things in my browser. To do that I needed to set up the tuntap device in a separate terminal. </p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo ifconfig tap0 10.0.0.1 netmask 255.255.255.0</code></pre></div>
+
+<p>Success! Visiting http://10.0.0.2 in Firefox brings up the home page of the blog. The next question, do the posts load? Yes! My first post loads without issue. </p>
+
+<p><a href="/about">About Page</a>…nope. In flat, black letters <code>Not found</code> stood irreverently. </p>
+
+<h2 id="groping-in-the-dark">Groping In The Dark</h2>
+
+<p>What had thus far been smooth sailing over calm seas had taking a turn for the bad. Getting a basic site to be served by mirage was going to be more trial by fire than victory lap. </p>
+
+<p>Okay, so how to I trouble shoot this? It’s not like there’s an Apache log spewing out helpful error messages. The console has some output related to ARP routing, but no helpful errors related to http. </p>
+
+<p>I took a look at the files Jekyll had generated in the htdocs folder. </p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ls
+about  css  feed.xml  index.html  jekyll</code></pre></div>
+
+<p>Interestingly, <code>about</code> is a folder and not a file. Which makes sense, I just didn’t think of it at the time of the error. Next question was, is there anything in the <code>about</code> folder? </p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ls about
+index.html</code></pre></div>
+
+<p>Yes, index.html. Surely if the index.html is served from the root folder it should be served from any folder, right? </p>
+
+<p>Next step was to take a look at the Ocaml code. Yes, the black magic. </p>
+
+<h2 id="staring-into-the-sun">Staring Into The Sun</h2>
+
+<p>A Mirage unikernel is broken down into a couple of different required files. There’s one file which is dedicated to the configuration, called  config.ml. This is the file where the magic really happens. At compile time it generates an main.ml file from the various devices you’ve set up for it to use. They are then passed into the project’s root ml file, in this case dispatch.ml at build time and a magical main.ml file is born…black magical. </p>
+
+<p>With this basic knowledge I took a guess at where the problem was, the dispatch.ml file. The dispatch.ml file only has a few functions and while sparsely documented, it is surprisingly straight forward about what is going on.   </p>
+
+<p>Top of the file opens a few modules which are needed to do things like threading and logging. After that the Main module is parametrised by several modules, the basic console, a file system, and an http server. </p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="k">open</span> <span class="nc">Lwt</span>
+<span class="k">open</span> <span class="nc">Printf</span>
+<span class="k">open</span> <span class="nc">V1_LWT</span>
+
+<span class="k">module</span> <span class="nc">Main</span> <span class="o">(</span><span class="nc">C</span><span class="o">:</span><span class="nc">CONSOLE</span><span class="o">)</span> <span class="o">(</span><span class="nc">FS</span><span class="o">:</span><span class="nc">KV_RO</span><span class="o">)</span> <span class="o">(</span><span class="nc">S</span><span class="o">:</span><span class="nn">Cohttp_lwt</span><span class="p">.</span><span class="nc">Server</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">let</span> <span class="n">start</span> <span class="n">c</span> <span class="n">fs</span> <span class="n">http</span> <span class="o">=</span>
+
+<span class="o">...</span></code></pre></div>
+
+<p>The http server, S, serves files stored on the file system. You know, like a normal http server. This part appears to occur inside the <code>dispatcher</code> function. A list of strings is checked if it is empty or not. An empty list adds the <code>index.html</code> string to a list and calls dispatcher again…so it isn’t empty the second time. A non-empty path is assembled into a single string and the server tries to read the file from the file system. If it cannot find the file it returns my irreverent <code>Not found</code> error. </p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="c">(* dispatch non-file URLs *)</span>
+<span class="k">let</span> <span class="k">rec</span> <span class="n">dispatcher</span> <span class="o">=</span> <span class="k">function</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">|</span> <span class="o">[</span><span class="s2">&quot;&quot;</span><span class="o">]</span> <span class="o">-&gt;</span> <span class="n">dispatcher</span> <span class="o">[</span><span class="s2">&quot;index.html&quot;</span><span class="o">]</span> 
+  <span class="o">|</span> <span class="n">segments</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">path</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">concat</span> <span class="s2">&quot;/&quot;</span> <span class="n">segments</span> <span class="k">in</span>
+    <span class="n">try_lwt</span>
+      <span class="n">read_fs</span> <span class="n">path</span>
+      <span class="o">&gt;&gt;=</span> <span class="k">fun</span> <span class="n">body</span> <span class="o">-&gt;</span>
+      <span class="nn">S</span><span class="p">.</span><span class="n">respond_string</span> <span class="o">~</span><span class="n">status</span><span class="o">:`</span><span class="nc">OK</span> <span class="o">~</span><span class="n">body</span> <span class="bp">()</span>
+    <span class="k">with</span> <span class="n">exn</span> <span class="o">-&gt;</span>
+      <span class="nn">S</span><span class="p">.</span><span class="n">respond_not_found</span> <span class="bp">()</span>
+<span class="k">in</span></code></pre></div>
+
+<p><code>read_fs path</code> takes the path and passes it to the <code>read_fs</code> function where the file is looked up on the device. This is a <a href="https://www.youtube.com/watch?v=ZhuHCtR3xq8">monad</a>, read_fs returns some string contained in an <code>Lwt.t</code>, so the <code>&gt;&gt;=</code> operator shoves whatever is returned by that <code>Lwt.t</code> into the variable <code>body</code> of the next function. Ocaml has labeled arguments (a nice feature for any language) and <code>~body</code> is short hand for <code>~body:body</code> (in case you were confused by that). </p>
+
+<p>Couple of things to note about the above code. I’m not sure why this needs to be recursive. Not that recursion is a bad thing in Ocaml, but it just calls dispatcher at most twice with <code>["index.html"]</code> in the list the second time. I suspect theres a more graceful way to deal with this (NOTE: my solution is probably not much better for this). Also and more importantly, it only serves the index.html page if and only if it is the root path. That is: it won’t serve /about/index.html as /about/ like I want (and I guess Jekyll too). </p>
+
+<p>So now I need to find a way to change this code so it’ll work for Jekyll. This shouldn’t be too hard. I just need to find out how to determine if this path is actually a file or a directory. Next stop the <a href="http://mirage.github.io/">Mirage Documentation</a>. </p>
+
+<h2 id="taking-a-wrong-turn">Taking A Wrong Turn</h2>
+
+<p>Okay, there’s a lot here and I’m not sure what module I’m using here for the file system. It makes sense to stat the file to see if it is a directory or not. I took a look higher up in the code to see what functions were being called on the FS module. </p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="k">let</span> <span class="n">read_fs</span> <span class="n">name</span> <span class="o">=</span>
+  <span class="nn">FS</span><span class="p">.</span><span class="n">size</span> <span class="n">fs</span> <span class="n">name</span>
+  <span class="o">&gt;&gt;=</span> <span class="k">function</span>
+  <span class="o">|</span> <span class="o">`</span><span class="nc">Error</span> <span class="o">(</span><span class="nn">FS</span><span class="p">.</span><span class="nc">Unknown_key</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">fail</span> <span class="o">(</span><span class="nc">Failure</span> <span class="o">(</span><span class="s2">&quot;read &quot;</span> <span class="o">^</span> <span class="n">name</span><span class="o">))</span>
+  <span class="o">|</span> <span class="o">`</span><span class="nc">Ok</span> <span class="n">size</span> <span class="o">-&gt;</span>
+     <span class="nn">FS</span><span class="p">.</span><span class="n">read</span> <span class="n">fs</span> <span class="n">name</span> <span class="mi">0</span> <span class="o">(</span><span class="nn">Int64</span><span class="p">.</span><span class="n">to_int</span> <span class="n">size</span><span class="o">)</span>
+     <span class="o">&gt;&gt;=</span> <span class="k">function</span>
+     <span class="o">|</span> <span class="o">`</span><span class="nc">Error</span> <span class="o">(</span><span class="nn">FS</span><span class="p">.</span><span class="nc">Unknown_key</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">fail</span> <span class="o">(</span><span class="nc">Failure</span> <span class="o">(</span><span class="s2">&quot;read &quot;</span> <span class="o">^</span> <span class="n">name</span><span class="o">))</span>
+     <span class="o">|</span> <span class="o">`</span><span class="nc">Ok</span> <span class="n">bufs</span> <span class="o">-&gt;</span> <span class="n">return</span> <span class="o">(</span><span class="nn">Cstruct</span><span class="p">.</span><span class="n">copyv</span> <span class="n">bufs</span><span class="o">)</span>
+<span class="k">in</span></code></pre></div>
+
+<p>Okay, so there is a <code>FS.size</code> function and a <code>FS.read</code> function called here. I could try to see how things are working in the config.ml file. </p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="o">...</span>
+<span class="k">let</span> <span class="n">mode</span> <span class="o">=</span>
+  <span class="k">try</span> <span class="k">match</span> <span class="nn">String</span><span class="p">.</span><span class="n">lowercase</span> <span class="o">(</span><span class="nn">Unix</span><span class="p">.</span><span class="n">getenv</span> <span class="s2">&quot;FS&quot;</span><span class="o">)</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="s2">&quot;fat&quot;</span> <span class="o">-&gt;</span> <span class="o">`</span><span class="nc">Fat</span>
+    <span class="o">|</span> <span class="o">_</span>     <span class="o">-&gt;</span> <span class="o">`</span><span class="nc">Crunch</span>
+  <span class="k">with</span> <span class="nc">Not_found</span> <span class="o">-&gt;</span>
+    <span class="o">`</span><span class="nn">Crunch</span>
+<span class="p">...</span>
+<span class="n">let</span> <span class="n">fs</span> <span class="o">=</span> <span class="k">match</span> <span class="n">mode</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="o">`</span><span class="nc">Fat</span>    <span class="o">-&gt;</span> <span class="n">fat_ro</span> <span class="s2">&quot;./htdocs&quot;</span>
+  <span class="o">|</span> <span class="o">`</span><span class="nc">Crunch</span> <span class="o">-&gt;</span> <span class="n">crunch</span> <span class="s2">&quot;./htdocs&quot;</span>
+<span class="o">...</span>
+<span class="k">let</span> <span class="n">main</span> <span class="o">=</span>
+  <span class="n">foreign</span> <span class="s2">&quot;Dispatch.Main&quot;</span> <span class="o">(</span><span class="n">console</span> <span class="o">@-&gt;</span> <span class="n">kv_ro</span> <span class="o">@-&gt;</span> <span class="n">http</span> <span class="o">@-&gt;</span> <span class="n">job</span><span class="o">)</span>
+<span class="o">...</span></code></pre></div>
+
+<p>Yep…black magic. Looks like I’m using <a href="https://github.com/mirage/ocaml-crunch">crunch</a> and not the fat file system because that’s the default. And I don’t see a crunch module in the Ocaml documentation…</p>
+
+<p>When faced with a murky coding situation I fall back to my tried and true solution…take a guess. I know it is the file system so something that operates on blocks or has ‘-fs’ at the end of it is a likely candidate. </p>
+
+<p>After some combing through the documentation, I located what looked like the package I wanted: <a href="http://mirage.github.io/mirage/#Mirage_types.V1:FS.io">Mirage_types.V1:FS.io</a>. It has a <code>read</code> function and a <code>size</code> function that appears to match what I’m using. Also, it has a <code>stat</code> function which is what I need. </p>
+
+<p>Unfortunately, after modifying the code to use the <code>stat</code> function and removing the recursive part of dispatcher I received a compile time error when rebuilding. </p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make
+...
+File <span class="s2">&quot;dispatch.ml&quot;</span>, line 41, characters 13-20:
+Error: Unbound value FS.stat
+Command exited with code 2.
+make: *** <span class="o">[</span>main.native<span class="o">]</span> Error 10</code></pre></div>
+
+<h2 id="out-of-the-woods">Out Of The Woods</h2>
+
+<p>I’m looking at the wrong module. One of these day’s I’ll need to get merlin working on my workstation. So I took another poke around the documentation. Actually it is using <a href="http://mirage.github.io/mirage/#Mirage_types.V1:KV_RO">Mirage_types.V1:KV_RO</a> which makes more sense based on what the main module is using. </p>
+
+<p>Even with the right module things aren’t looking so great. There isn’t a <code>stat</code> function (actually the error told me that, but the documentation confirmed it). </p>
+
+<p>Eventually, I settled on a solution which catches the missing file error and then tries again by appending <code>index.html</code> to the end of the path. This seems to work well, though I’m not quite satisfied with using exceptions here. </p>
+
+<div class="highlight"><pre><code class="language-ocaml" data-lang="ocaml"><span class="c">(* dispatch non-file URLs *)</span>
+<span class="k">let</span> <span class="n">dispatcher</span> <span class="n">segments</span> <span class="o">=</span> 
+  <span class="k">let</span> <span class="n">path</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">concat</span> <span class="s2">&quot;/&quot;</span> <span class="n">segments</span> <span class="k">in</span> 
+  <span class="n">try_lwt</span>
+    <span class="n">read_fs</span> <span class="n">path</span> 
+    <span class="o">&gt;&gt;=</span> <span class="k">fun</span> <span class="n">body</span> <span class="o">-&gt;</span> 
+    <span class="nn">S</span><span class="p">.</span><span class="n">respond_string</span> <span class="o">~</span><span class="n">status</span><span class="o">:`</span><span class="nc">OK</span> <span class="o">~</span><span class="n">body</span> <span class="bp">()</span> 
+    <span class="k">with</span> <span class="n">exn</span> <span class="o">-&gt;</span> 
+      <span class="n">try_lwt</span> 
+        <span class="n">read_fs</span> <span class="o">(</span><span class="n">path</span> <span class="o">^</span> <span class="s2">&quot;/index.html&quot;</span><span class="o">)</span> 
+        <span class="o">&gt;&gt;=</span> <span class="k">fun</span> <span class="n">body</span> <span class="o">-&gt;</span> 
+        <span class="nn">S</span><span class="p">.</span><span class="n">respond_string</span> <span class="o">~</span><span class="n">status</span><span class="o">:`</span><span class="nc">OK</span> <span class="o">~</span><span class="n">body</span> <span class="bp">()</span> 
+      <span class="k">with</span> <span class="n">exn</span> <span class="o">-&gt;</span> <span class="nn">S</span><span class="p">.</span><span class="n">respond_not_found</span> <span class="bp">()</span> 
+<span class="k">in</span></code></pre></div>
+
+<p>There you have it. Now that <a href="/about/">about</a> works I’ll see about getting this blog up on the cloud. ‘Til next time. </p>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">A Set Of Certain Musings</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>A Set Of Certain Musings</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/CBothwell">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">CBothwell</span>
+            </a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">A set of musings about coding, computers, and perhaps some other things...
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

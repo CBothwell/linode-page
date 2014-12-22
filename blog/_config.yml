@@ -1,0 +1,15 @@
+# Site settings
+title: A Set Of Certain Musings 
+#email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  A set of musings about coding, computers, and perhaps some other things...
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://christopherbothwell.com" # the base hostname & protocol for your site
+#twitter_username: jekyllrb
+github_username:  CBothwell
+
+highlighter: pygments
+
+# Build settings
+markdown: kramdown
+destination: ../htdocs/ 
