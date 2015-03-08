@@ -8,7 +8,7 @@ It has been almost a week since my last post and I've been working on getting th
 
 ### Linode and Mirage 
 
-I haven't been able to find a walk through or tutorial on how to get Mirage set up on Lindoe. Linode provides a number of default Linux distributions which can be installed from a single within the control panel. However, like AWS, they provide a pv-grub instance which can be used to boot a custom distribution. The caveat is that there are quite a few more steps which need to be taken to get your Mirage kernel off the ground. 
+I haven't been able to find a walk through or tutorial on how to get Mirage set up on Linode. Linode provides a number of default Linux distributions which can be installed from a single within the control panel. However, like AWS, they provide a pv-grub instance which can be used to boot a custom distribution. The caveat is that there are quite a few more steps which need to be taken to get your Mirage kernel off the ground. 
 
 The steps to getting this set up were pretty similar to the EC2 tutorial, however I encountered some major issues that were fixed by some minor tweaks of the steps. In the interest of time spent reading this post (also writing it) I won't go too much into what the specific problems were. Suffice to say the menu.lst needs to be a little bit different than what is shown for EC2 on the [Mirage tutorial](http://openmirage.org/wiki/xen-boot). 
 
